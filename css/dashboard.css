@@ -1,0 +1,40 @@
+/* CSS */
+.dashboard-view {
+  height: calc(100% - 45px);
+}
+
+.dashboard-baby {
+  box-shadow: 1px 1px 1px 1px #ccc
+}
+
+li a {
+  color: #7a8084;
+  text-transform: uppercase;
+  font-weight: 900
+}
+
+li a.active, li a:hover {
+  color: #6edaa1
+}
+
+
+
+
+/* ADMIN */
+.upload-div {
+  border: 3px dashed #7a8084;
+  position: relative;
+  height: 200px
+}
+
+.upload-div p, .upload-div .form-group input {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  padding: 8.5%;
+  cursor: pointer;
+}
+
+.upload-div .form-group input {
+  opacity: 0
+}

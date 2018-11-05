@@ -1,0 +1,151 @@
+/* CSS */
+* {
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box !important;
+  word-wrap: break-word !important;
+  color: #7a8084
+}
+
+body, html {
+  height: 100%;
+}
+
+.bg-1 {
+  background: #6edaa1;
+  color: #fff
+}
+
+.bg-2 {
+  background: #26333d;
+  color: #fff;
+}
+
+.color-1 {
+  color: #fff;
+}
+
+.color-2 {
+  color: #7a8084
+}
+
+.color-3 {
+  color: #6edaa1
+}
+
+.color-err {
+  color: red
+}
+
+.logo {
+  font-size: 40px;
+  font-weight: 900;
+  animation-name: flipInY;
+  animation-duration: 2s;
+  /*animation-iteration-count: infinite;*/
+}
+
+.dummy-link {
+  cursor: pointer;
+  transition: font-size 0.5s;
+}
+
+.dummy-link:hover {
+  font-size: 105%
+}
+
+
+
+
+/* PAGES */
+.page {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+
+.card-columns {
+  column-gap: 0;
+}
+
+.card-columns .card {
+  border-radius: 0;
+  margin: 0
+}
+
+
+
+/* FORMS */
+.form1 .form-control {
+    border: 1px solid #7a8084;
+    background: transparent !important;
+    box-shadow: none !important;
+
+    transition: transform 0.5s;
+}
+
+.form1 .form-control:focus {
+    border: 1px solid #6edaa1;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.form1 .form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #26333d inset !important;
+    -webkit-text-fill-color: #495057 !important;
+}
+
+.form1 .form-control:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff !important;
+}
+
+.form1 .btn {
+  text-transform: uppercase;
+  border: none;
+
+  transition: transform 0.5s;
+}
+
+.form1 .btn:hover, .form1 .btn:focus, .form1 .btn:active {
+  background: #6edaa1 !important;
+  box-shadow: none;
+}
+
+.form1 .btn:hover {
+  transform: scale(1.05);
+}
+
+div.sub-msg {
+  display: none;
+}
+
+div.sub-msg-visible {
+  padding: 10px;
+  margin: 20px 0;
+  margin-bottom: 0;
+  display: block;
+  animation-name: fadeInUp;
+  animation-duration: 0.5s;
+}
+
+
+
+
+/* Media Query */
+@media only screen and (max-width: 992px) {
+
+  /* FORMS */
+  .form1 small  {
+    font-size: 150%;
+  }
+
+  .form1 .form-control {
+    font-size: 200%;
+    padding: 5% 20px;
+    margin-top: 20px
+  }
+
+  .form1 .btn {
+    font-size: 200%;
+    padding: 2.5%;
+    margin-top: 40px
+  }
+}

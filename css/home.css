@@ -1,0 +1,21 @@
+/* CSS */
+.homeBody-child:nth-child(2) {
+  border-left: 1px solid #7a8084;
+  padding: 20px 5%
+}
+
+
+
+
+@media only screen and (max-width: 992px) {
+
+  .homeBody-child:nth-child(2) {
+    border-left: none;
+    padding: 0
+  }
+
+  .homeBody-child:nth-child(2) .logo {
+    font-size: 370%;
+    padding-bottom: 20px
+  }
+}
