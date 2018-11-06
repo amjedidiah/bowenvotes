@@ -117,13 +117,14 @@ const submitForm = (form, err=0) => {
         getLoginForm(form, nextForm)
       }
 
-      form.querySelector('div#sub-msg').innerHTML = data
       form.querySelector('div#sub-msg').className = 'sub-msg-visible'
       btn.innerHTML = btnHTML
 
       if(data === '2') {
+        data = 'Success'
         window.location = './'
       }
+      form.querySelector('div#sub-msg').innerHTML = data
     }
   }) : 'no'
 

@@ -42,7 +42,9 @@
       "at"=>"@",
       "do"=>".",
       "sp"=>"%20",
-      "sp"=>" ",
+      "sl"=>"/",
+      "an"=>"&",
+      "cl"=>" ",
       "ze"=>0,
       "on"=>1,
       "tw"=>2,
@@ -98,7 +100,9 @@
       "at"=>"@",
       "do"=>".",
       "sp"=>"%20",
-      "sp"=>" ",
+      "sl"=>"/",
+      "an"=>"&",
+      "cl"=>" ",
       "ze"=>0,
       "on"=>1,
       "tw"=>2,
@@ -307,7 +311,8 @@
                 // More headers
                 $headers .= 'From: <admin@bowenuiversityvotes.com>' . "\r\n";
 
-                if(mail($user_mail,$subject,$message,$headers)) {
+                //if(mail($user_mail,$subject,$message,$headers)) {
+                if($headers) {
 
                   $protection_mail = codeValue($user_mail);
                   $query_password_update = mysqli_query($con, "UPDATE users SET pass='$md5_pass', mail='$protection_mail', valid=1 WHERE user='$protection_login_id' LIMIT 1");

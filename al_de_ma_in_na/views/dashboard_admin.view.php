@@ -45,24 +45,23 @@
 
             <div class="col p-5">
 
-              <form id='csvUpload' class="form1 dashboard-baby p-5" action="action.php?jsDoc=1" method="post" enctype="multipart/form-data" target="upload_target">
+              <form id='csvUpload' class="form1 dashboard-baby pl-5 pr-5" action="action.php?jsDoc=1" method="post" enctype="multipart/form-data" target="upload_target">
 
-                <h2>Register Your Students</h2>
+                <h1 class='mb-5'>Register Your Students</h1>
                 <div class='upload-div mt-5'>
                   <p class='upload-txt'>
-                    Drop your .CSV file here or Browse
+                    Drop your .CSV file here or Click to Browse
                   </p>
-                  <div class='form-group'>
-                    <input type="file" name="csv_file" accept=".csv" class='form-control p-5'>
+                  <div class='form-group input-parent'>
+                    <input type="file" id='csvFile' name="csv_file" accept=".csv" class='form-control form-control-validated p-5'>
+                    <small id="csvFileHelp" class="form-text text-muted color-err"></small>
                   </div>
                 </div>
 
                 <iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;">
                 </iframe>
-
-                <button type="submit"  class="btn btn-primary btn-block btn-lg bg-1 mt-4" name="">Register</button>
+                <button type="submit"  class="d-none btn btn-primary btn-block btn-lg bg-1 mt-4" name="">Register</button>
                 <div id="sub-msg" class=""></div>
-
 
               </form>
 

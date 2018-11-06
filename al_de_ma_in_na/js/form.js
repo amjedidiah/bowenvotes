@@ -19,36 +19,31 @@ const submitForm = (form, upDet, err=0) => {
       id = form.id
 
   if(upDet === true) {
-    iframe = form.querySelector('iframe')
-
-
-
+    let iframe = form.querySelector('iframe')
     form.submit()
 
+    //after uploading file, start listening for error number: 2
+    let frameLoopingFunc = () => {
+                                    let doc = iframe.contentDocument? iframe.contentDocument: iframe.contentWindow.document,
+                                        docHTML = doc.querySelector('body').innerHTML,
+                                        uploadBoxmsg = form.querySelector('.upload-txt').innerHTML
 
+                                    form.querySelector('.upload-txt').innerHTML = `<i class="fas fa-spinner fa-pulse"></i>`
 
-    //start listening for answer
-    // setInterval(() => {
-    //   let doc = iframe.contentDocument? iframe.contentDocument: iframe.contentWindow.document,
-    //       docHTML = doc.querySelector('body').innerHTML,
-    //       msg = form.querySelector('.upload-txt').innerHTML
-    //
-    //   if(docHTML === '0' || docHTML === '') {
-    //     //error
-    //     form.querySelector('.upload-txt').innerHTML = msg
-    //   } else if(docHTML === '1') {
-    //     form.querySelector('.upload-txt').innerHTML = 'Success'
-    //     return docHTML
-    //   } else {
-    //     msg = `<i class="fas fa-spinner fa-pulse"></i>`
-    //     form.querySelector('.upload-txt').innerHTML = msg
-    //   }
-    //
-    //   console.log(docHTML);
-    //
-    // }, 200)
+                                    if(docHTML.includes('02')) {
+                                      form.querySelector('.upload-txt').innerHTML = msg
+                                    } else if(docHTML.includes('01')) {
+                                      form.querySelector('.upload-txt').innerHTML = 'Upload successful<br />Click the register button'
+                                      form.querySelector('.input-parent').classList = 'd-none'
+                                      clearInterval(frameLooping)
+
+                                      form.querySelector('.btn').classList.add('d-block', 'animated','fadeInUp')
+                                      form.querySelector('.btn').classList.add('d-block', 'animated','fadeInUp')
+                                    }
+                                  },
+        frameLooping = setInterval(frameLoopingFunc, 200)
+
   } else {
-    console.log('nice')
     smalls.forEach(function(a, b) {
       if(a.innerHTML !== '') {
         err++;
@@ -68,13 +63,16 @@ const submitForm = (form, upDet, err=0) => {
       data: inputs,
       success: function(data) {
 
-        form.querySelector('div#sub-msg').innerHTML = data
         form.querySelector('div#sub-msg').className = 'sub-msg-visible'
         btn.innerHTML = btnHTML
 
         if(data === '2') {
+          data = 'Success'
           window.location = './'
         }
+        form.querySelector('div#sub-msg').innerHTML = data
+
+        console.log(data)
       }
     }) : 'no'
   }
@@ -89,27 +87,24 @@ document.querySelectorAll('form').forEach((a,b) => {
 
 
 
-
 //on change file inputs
-document.querySelectorAll("form input[type='file']").forEach((a,b) => {
+document.querySelectorAll("input[type='file'].form-control-validated").forEach((a,b) => {
   a.addEventListener('change', (event) => {
-    form = a.parentElement.parentElement.parentElement
+    let form = a.parentElement.parentElement.parentElement,
+        msg = ''
 
-    function readURL(input) {
-       if (input.files && input.files[0]) {
-         if( input.files[0].type === 'application/vnd.ms-excel') {
-           var reader = new FileReader();
-           reader.onload = function (e) {
-               $('#blah')
-                 .attr('src', e.target.result);
+      if (a.files && a.files[0]) {
+        if(a.accept === ".csv") {
+          if (a.files[0].type === 'application/vnd.ms-excel') {
+            msg = ''
+            submitForm(form, true)
+          } else {
+            msg = 'Please upload a CSV file'
+          }
+        }
+      }
 
-           };
-           reader.readAsDataURL(input.files[0]);
-         }
-       }
-   }
-
-   readURL(form.querySelector('input[type="file"]'))
-    //submitForm(form, true)
+      // a.parentElement.children[1].innnerHTML = 'hello'
+      let z = a.parentElement.children[1].textContent = msg
   })
 })

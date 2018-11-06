@@ -41,7 +41,9 @@
       "at"=>"@",
       "do"=>".",
       "sp"=>"%20",
-      "sp"=>" ",
+      "sl"=>"/",
+      "an"=>"&",
+      "cl"=>" ",
       "ze"=>0,
       "on"=>1,
       "tw"=>2,
@@ -113,17 +115,16 @@
 
     //upload .csv
     function uploadCSV($file) {
-      $result = 'start';
+      print_r(0);
       $destination_path = getcwd().DIRECTORY_SEPARATOR. 'csv/';
       $target_path = $destination_path . basename( $file['name']);
 
       if(@move_uploaded_file($file['tmp_name'], $target_path)) {
-         $result = 1;
+         print_r(1);
       } else {
-        $result = 0;
+        print_r(2);
       }
 
-      return $result;
       sleep(1);
     }
     if(isset($_FILES['csv_file'])) {
@@ -136,19 +137,62 @@
 
     //put users into db
     function registerStudents($file_link) {
-      $row = 1;
+
+      $error_regs = [];
+      $existing_regs = [];
+
+      $destination_path = explode("fakepath", $file_link);
+      $indexNum = count($destination_path) - 1;
+      $fileName = $destination_path[$indexNum];
+
+
+
+      $file_link = getcwd().DIRECTORY_SEPARATOR. 'csv'.$fileName;
       if (($handle = fopen($file_link, "r")) !== FALSE) {
           while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
               $num = count($data);
-              $row++;
               for ($c=0; $c < $num; $c++) {
-                  echo $data[$c] . " ".$c."<br />\n";
-              }
-          }
-          fclose($handle);
-      }
-    }
 
+                  $reg_num = $data[0];
+                  $faculty = $data[1];
+                  $department = $data[2];
+                  $level = $data[3];
+
+                  $protection_reg_num = codeValue($reg_num);
+                  $protection_faculty = codeValue($faculty);
+                  $protection_department = codeValue($department);
+                  $protection_level = codeValue($level);
+              }
+
+              require('connect.php');
+               //insert into db
+
+               //check if they exist already
+               $chk_usr_exist = mysqli_query($con, "SELECT * FROM users WHERE user='$protection_reg_num' LIMIT 1");
+
+               if(mysqli_num_rows($chk_usr_exist) > 0) {
+                 $existing_regs[] = $reg_num;
+               } else {
+                 $user_input_query = mysqli_query($con, "INSERT INTO users (id, user, pass, mail, valid, candidates, faculty, department, level) VALUES (NULL, '$protection_reg_num', '', '', 0, '', '$protection_faculty', '$protection_department', '$protection_level')");
+                 if(!$user_input_query) {
+                   $error_regs[] = $reg_num;
+                 }
+               }
+          }
+      }
+
+      if(count($error_regs) > 0 || count($existing_regs) > 0) {
+        $result[] = $existing_regs;
+        $result[] = $error_regs;
+      } else {
+        $result = 2;
+      }
+
+      print_r($result);
+    }
+    if(isset($_POST['csvFile'])) {
+      print_r(registerStudents($_POST['csvFile']));
+    }
 
   } else {
     header('location: ./404.php');
