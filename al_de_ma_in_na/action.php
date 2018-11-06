@@ -194,6 +194,201 @@
       print_r(registerStudents($_POST['csvFile']));
     }
 
+
+
+
+    // ADMIN functions
+
+
+
+    //Create elections
+    function createElection($es_name, $es_f, $es_d, $es_l, $el_tab='elections') {
+
+      require('connect.php');
+
+      //es_f, es_d & es_l should be posted as arrays using AJAX and not put in $_GET;
+
+      //md5 & hash table name
+      $protection_es_name = codeValue($es_name);
+      $protection_es_f= codeValue(implode($es_f)); //convert these ones to string to store them in db as string
+      $protection_es_d = codeValue(implode($es_d));  //convert these ones to string to store them in db as string
+      $protection_es_l = codeValue(implode($es_l));  //convert these ones to string to store them in db as string
+
+      //chk if election already exists
+      $query_election_name_check = mysqli_query($con, "SELECT * FROM $el_tab WHERE name = '$protection_es_name' LIMIT 1");
+      $count = mysqli_num_rows($query_election_name_check);
+
+      if($count > 0) {
+        return 'error_ election exists';
+      } else {
+        $query_election_create = mysqli_query($con, "INSERT INTO $el_tab (id, name, faculty, department, level) VALUES (NULL, '$protection_es_name', '$protection_es_f', '$protection_es_d', '$protection_es_l')");
+        if($query_election_create) {
+          return 'success';
+        } else {
+          return 'error_election create';
+        }
+      }
+
+    }
+    if(isset($_GET['electionName']) && !isset($_GET['positionName']) && !isset($_GET['candidateName']) && !isset($_GET['vote'])) {
+
+      //change this to $_POST from AJAX document
+      $_POST['esf'] = array('Engineering', 'Pharmacy');
+      $_POST['esd'] = array('ECE', 'MME');
+      $_POST['esl'] = array(100, 200, 400);
+
+      print_r(createElection($_GET['electionName'], $_POST['esf'], $_POST['esd'], $_POST['esl']));
+    }
+
+    //delete election
+    function deleteElection($es_name, $el_tab='elections', $pos_tab = 'positions', $can_tab = 'candidates') {
+
+      //protect election & position
+      $protection_es_name = codeValue($es_name);
+
+      require('connect.php');
+
+      $query_delete_election = mysqli_query($con, "DELETE FROM $el_tab WHERE name='$protection_es_name' LIMIT 1");
+      $query_delete_election_position = mysqli_query($con, "DELETE FROM $pos_tab WHERE election='$protection_es_name'");
+      $query_delete_election_position_candidates = mysqli_query($con, "DELETE FROM $can_tab WHERE election='$protection_es_name'");
+
+      if($query_delete_election && $query_delete_election_position && $query_delete_election_position_candidates) {
+        return 'success';
+      } else {
+        return 'error_candidate delete';
+      }
+
+    }
+    if(isset($_GET['electionDel']) && !isset($_GET['positionDel']) && !isset($_GET['candidateDel'])) {
+      print_r(deleteElection($_GET['electionDel']));
+    }
+
+
+
+
+    //Create positions
+    function createPositions($es_name, $position_name, $el_tab='elections', $pos_tab='positions') {
+
+      //protect election & position
+      $protection_es_name = codeValue($es_name);
+      $protection_position_name = codeValue($position_name);
+
+      require('connect.php');
+      //chk if position already exists
+
+      $query_election_check = mysqli_query($con, "SELECT * FROM $el_tab WHERE name='$protection_es_name' LIMIT 1");
+      $query_position_check = mysqli_query($con, "SELECT * FROM $pos_tab WHERE name = '$protection_position_name' AND election = '$protection_es_name' LIMIT 1");
+      $count = mysqli_num_rows($query_position_check);
+
+      if(mysqli_num_rows($query_election_check) !== 1) {
+        return 'error_position election_not_found';
+      } else if($count > 0) {
+        return 'error_position exists';
+      } else {
+        $query_position_create = mysqli_query($con, "INSERT INTO $pos_tab (id, name, election) VALUES(NULL ,'$protection_position_name','$protection_es_name')");
+
+        if($query_position_create) {
+          return 'success';
+        } else {
+          return 'error_position create';
+        }
+
+      }
+
+
+
+    }
+    if(isset($_GET['electionName']) && isset($_GET['positionName']) && !isset($_GET['candidateName']) && !isset($_GET['vote'])) {
+      print_r(createPositions($_GET['electionName'], $_GET['positionName']));
+    }
+
+    //Delete positions
+    function deletePosition($es_name, $position_name, $pos_tab = 'positions', $can_tab = 'candidates') {
+
+      //protect election & position
+      $protection_es_name = codeValue($es_name);
+      $protection_position_name = codeValue($position_name);
+
+      require('connect.php');
+
+      $query_delete_position = mysqli_query($con, "DELETE FROM $pos_tab WHERE name='$protection_position_name'  AND election='$protection_es_name' LIMIT 1");
+      $query_delete_position_candidates = mysqli_query($con, "DELETE FROM $can_tab WHERE position='$protection_position_name'  AND election='$protection_es_name'");
+
+      if($query_delete_position && $query_delete_position_candidates) {
+        return 'success';
+      } else {
+        return 'error_candidate delete';
+      }
+
+    }
+    if(isset($_GET['electionDel']) && isset($_GET['positionDel']) && !isset($_GET['candidateDel'])) {
+      print_r(deletePosition($_GET['electionDel'], $_GET['positionDel']));
+    }
+
+
+
+
+    //Create candidates
+    function createCandidates($es_name, $position_name, $candidate_name, $el_tab = 'elections', $pos_tab = 'positions', $can_tab = 'candidates') {
+
+      //protect election & position
+      $protection_es_name = codeValue($es_name);
+      $protection_position_name = codeValue($position_name);
+      $protection_candidate_name = codeValue($candidate_name);
+
+      require('connect.php');
+      //chk if candidate already exists
+      //chk if position already exists
+
+      $query_election_check = mysqli_query($con, "SELECT * FROM $el_tab WHERE name='$protection_es_name' LIMIT 1");
+      $query_position_check = mysqli_query($con, "SELECT * FROM $pos_tab WHERE name='$protection_position_name' LIMIT 1");
+      $query_candidate_check = mysqli_query($con, "SELECT * FROM $can_tab WHERE name='$protection_candidate_name' AND position='$protection_position_name' AND election='$protection_es_name' LIMIT 1");
+      $count = mysqli_num_rows($query_candidate_check);
+
+      if(mysqli_num_rows($query_election_check) !== 1) {
+        return 'error_candidate election_not_found';
+      } else if(mysqli_num_rows($query_position_check) !== 1) {
+        return 'error_candidate position_not_found';
+      } else if($count > 0) {
+        return 'error_candidate exists';
+      } else {
+        $query_candidate_create = mysqli_query($con, "INSERT INTO $can_tab (id, name, position, election, votes) VALUES(NULL, '$protection_candidate_name' ,'$protection_position_name','$protection_es_name', 0)");
+
+        if($query_candidate_create) {
+          return 'success';
+        } else {
+          return 'error_position create';
+        }
+
+      }
+    }
+    if(isset($_GET['electionName']) && isset($_GET['positionName']) && isset($_GET['candidateName']) && !isset($_GET['vote'])) {
+      print_r(createCandidates($_GET['electionName'], $_GET['positionName'], $_GET['candidateName']));
+    }
+
+    //Delete candidates
+    function deleteCandidates($es_name, $position_name, $candidate_name, $can_tab = 'candidates') {
+
+      //protect election & position
+      $protection_es_name = codeValue($es_name);
+      $protection_position_name = codeValue($position_name);
+      $protection_candidate_name = codeValue($candidate_name);
+
+      require('connect.php');
+
+      $query_delete_candidate = mysqli_query($con, "DELETE FROM $can_tab WHERE name='$protection_candidate_name' AND position='$protection_position_name'  AND election='$protection_es_name' LIMIT 1");
+
+      if($query_delete_candidate) {
+        return 'success';
+      } else {
+        return 'error_candidate delete';
+      }
+
+    }
+    if(isset($_GET['electionDel']) && isset($_GET['positionDel']) && isset($_GET['candidateDel'])) {
+      print_r(deleteCandidates($_GET['electionDel'], $_GET['positionDel'], $_GET['candidateDel']));
+    }
+
   } else {
     header('location: ./404.php');
   }

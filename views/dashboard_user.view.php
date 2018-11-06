@@ -7,9 +7,18 @@
 </head>
 <body class=''>
 <div class="container-fluid h-100 page">
+  <div class="row p-2 fixed dashboard-header">
+    <div class="col pr-5 text-right">
+      <span class='logout dummy-link'>
+        Logout
+      </span>
+    </div>
+  </div>
+
+
   <div class='row h-100'>
 
-    <div class="col-2 h-100 bg-2 text-center">
+    <div class="col-2 fixed dashboard-header-side h-100 bg-2 text-center">
       <p href='#' class='logo color-1 text-center'>
         <i class="far fa-check-square color-1 mt-5"></i>
       </p>
@@ -25,15 +34,8 @@
 
     </div>
 
-    <div class="col h-100">
-    <div class="row">
-      <div class="col p-2 pr-5 text-right">
-        <span class='logout dummy-link'>
-          Logout
-        </span>
-      </div>
-    </div>
-    <div class="row dashboard-view">
+    <div class="col offset-2 h-100">
+    <div class="row dashboard-view mt-5 pt-5">
         <div class="col text-center tab-content h-100" id="v-tabContent">
           <div class="tab-pane fade show active h-100" id="v-feed" role="tabpanel" aria-labelledby="v-feed-tab">
             No feeds to display

@@ -1,10 +1,20 @@
 /* CSS */
 .dashboard-view {
-  height: calc(100% - 45px);
 }
 
 .dashboard-baby {
   /* box-shadow: 1px 1px 1px 1px #ccc */
+}
+
+.dashboard-header-side {
+  z-index: 999999
+}
+
+.dashboard-header {
+  width: 100%;
+  box-shadow: 1px 1px 1px 1px #f0f0f0;
+  z-index: 99999;
+  background: #fff
 }
 
 li a {

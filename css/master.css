@@ -10,6 +10,10 @@ body, html {
   height: 100%;
 }
 
+.fixed {
+  position: fixed
+}
+
 .bg-1 {
   background: #6edaa1;
   color: #fff
@@ -37,7 +41,7 @@ body, html {
 }
 
 .logo {
-  font-size: 40px;
+  font-size: 250%;
   font-weight: 900;
   animation-name: flipInY;
   animation-duration: 2s;
@@ -74,42 +78,50 @@ body, html {
 
 
 /* FORMS */
-.form1 .form-control {
+form {
+    padding: 5%;
+}
+
+form .form-control {
     border: 1px solid #7a8084;
     background: transparent !important;
     box-shadow: none !important;
+    padding: 5%;
 
     transition: transform 0.5s;
 }
 
-.form1 .form-control:focus {
+form .form-control:focus {
     border: 1px solid #6edaa1;
-    color: #fff;
-    transform: scale(1.05);
 }
 
-.form1 .form-control:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px #26333d inset !important;
+form.form1 .form-control:focus {
+    transform: scale(1.05);
+    color: #fff;
+}
+
+form.form1 .form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100px #26333d inset !important;
     -webkit-text-fill-color: #495057 !important;
 }
 
-.form1 .form-control:-webkit-autofill:focus {
+form.form1 .form-control:-webkit-autofill:focus {
   -webkit-text-fill-color: #fff !important;
 }
 
-.form1 .btn {
+form .btn {
   text-transform: uppercase;
   border: none;
 
   transition: transform 0.5s;
 }
 
-.form1 .btn:hover, .form1 .btn:focus, .form1 .btn:active {
+form .btn:hover, form .btn:focus, form .btn:active {
   background: #6edaa1 !important;
   box-shadow: none;
 }
 
-.form1 .btn:hover {
+form.form1 .btn:hover {
   transform: scale(1.05);
 }
 
@@ -131,21 +143,7 @@ div.sub-msg-visible {
 
 /* Media Query */
 @media only screen and (max-width: 992px) {
-
-  /* FORMS */
-  .form1 small  {
-    font-size: 150%;
-  }
-
-  .form1 .form-control {
-    font-size: 200%;
-    padding: 5% 20px;
-    margin-top: 20px
-  }
-
-  .form1 .btn {
-    font-size: 200%;
-    padding: 2.5%;
-    margin-top: 40px
+  .logo {
+    font-size: 180%
   }
 }

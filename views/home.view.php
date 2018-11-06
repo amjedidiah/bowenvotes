@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="./css/home.css">
 
 </head>
-<body class='bg-2'>
+<body class='bg-2' id='homeBody'>
 <div class="container h-100 page">
 <div class="row h-100 align-items-center">
 

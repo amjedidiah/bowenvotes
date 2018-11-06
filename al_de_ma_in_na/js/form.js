@@ -1,9 +1,21 @@
 // js
 
-//Define forms
-let loginForm = document.querySelector('#formLogin'),
-    resetForm = document.querySelector('#formReset')
+const formControlValidate = (a) => {
+  let val = a.val(),
+      id = a.attr('id'),
+      msg
 
+  if(id === 'electionName') {
+    msg = 'nice'
+  }
+
+
+  a.parent().find('small').html(msg);
+
+}
+$('.form-control-validated').change(function() {
+  formControlValidate($(this));
+});
 
 
 
@@ -88,7 +100,7 @@ document.querySelectorAll('form').forEach((a,b) => {
 
 
 //on change file inputs
-document.querySelectorAll("input[type='file'].form-control-validated").forEach((a,b) => {
+document.querySelectorAll(".form-control-validated-file").forEach((a,b) => {
   a.addEventListener('change', (event) => {
     let form = a.parentElement.parentElement.parentElement,
         msg = ''
