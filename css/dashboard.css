@@ -17,14 +17,35 @@
   background: #fff
 }
 
-li a {
+.dashboard-header-bottom {
+  bottom: 0;
+  height: fit-content;
+  font-size: 140%
+}
+
+li.nav-item a, li.nav-item a i {
   color: #7a8084;
   text-transform: uppercase;
   font-weight: 900
 }
 
-li a.active, li a:hover {
-  color: #6edaa1
+li.nav-item a span, li.nav-item a span {
+  display: none;
+  font-size: 30%;
+  color: #6edaa1;
+  margin-top: -5px;
+  margin-bottom: 5px
+}
+
+li.nav-item a.active, li a:hover,
+li.nav-item a.active i, li a:hover i {
+  color: #6edaa1;
+  transform: scale(1.05);
+}
+
+li.nav-item a.active span, li a:hover span,
+li.nav-item a.active span i, li a:hover span i {
+  display: block
 }
 
 

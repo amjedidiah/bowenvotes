@@ -66,6 +66,64 @@
 
   }
 
+  function decodeValue($coded_value, $separator='_') {
+
+    $array = explode($separator, $coded_value);
+    $cipher = array(
+      "al"=>"a",
+      "ba"=>"b",
+      "ca"=>"c",
+      "de"=>"d",
+      "ec"=>"e",
+      "fa"=>"f",
+      "ga"=>"g",
+      "he"=>"h",
+      "in"=>"i",
+      "ja"=>"j",
+      "ka"=>"k",
+      "li"=>"l",
+      "ma"=>"m",
+      "na"=>"n",
+      "os"=>"o",
+      "pa"=>"p",
+      "qu"=>"q",
+      "ra"=>"r",
+      "sa"=>"s",
+      "ta"=>"t",
+      "un"=>"u",
+      "vi"=>"v",
+      "wh"=>"w",
+      "xy"=>"x",
+      "ya"=>"y",
+      "za"=>"z",
+      "at"=>"@",
+      "do"=>".",
+      "sp"=>"%20",
+      "sl"=>"/",
+      "an"=>"&",
+      "cl"=>" ",
+      "ze"=>0,
+      "on"=>1,
+      "tw"=>2,
+      "th"=>3,
+      "fo"=>4,
+      "fi"=>5,
+      "si"=>6,
+      "se"=>7,
+      "ei"=>8,
+      "ni"=>9
+    );
+
+    $decoded_value = array();
+
+    foreach ($array as $key => $value) {
+      $decoded_value[] = $cipher[$value];
+    }
+
+
+    return implode($decoded_value);
+  }
+
 
   if(isset($_GET['jsDoc']))  {
 
@@ -139,7 +197,6 @@
     function registerStudents($file_link) {
 
       $error_regs = [];
-      $existing_regs = [];
 
       $destination_path = explode("fakepath", $file_link);
       $indexNum = count($destination_path) - 1;
@@ -151,44 +208,58 @@
       if (($handle = fopen($file_link, "r")) !== FALSE) {
           while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
               $num = count($data);
-              for ($c=0; $c < $num; $c++) {
 
-                  $reg_num = $data[0];
-                  $faculty = $data[1];
-                  $department = $data[2];
-                  $level = $data[3];
+              if($num < 4 || $num > 4) {
+                return 'Please check that your document follows the standard format';
+              } else {
+                for ($c=0; $c < $num; $c++) {
 
-                  $protection_reg_num = codeValue($reg_num);
-                  $protection_faculty = codeValue($faculty);
-                  $protection_department = codeValue($department);
-                  $protection_level = codeValue($level);
+                    $reg_num = $data[0];
+                    $faculty = $data[1];
+                    $department = $data[2];
+                    $level = $data[3];
+
+                    $protection_reg_num = codeValue($reg_num);
+                    $protection_faculty = codeValue($faculty);
+                    $protection_department = codeValue($department);
+                    $protection_level = codeValue($level);
+                }
               }
 
               require('connect.php');
-               //insert into db
+              //insert into db & if exists update regnum
+              $user_input_query = mysqli_query($con, "INSERT INTO users (user, pass, mail, valid, candidates, faculty, department, level)
+                                                      VALUES ('$protection_reg_num', '', '', 0, '', '$protection_faculty', '$protection_department', '$protection_level')
+                                                      ON DUPLICATE KEY UPDATE
+                                                      user='$protection_reg_num'
+                                                      ");
+              //put faculty
+              $insert_f_query =  mysqli_query($con, "INSERT INTO faculty (name)
+                                                      VALUES ('$protection_faculty')
+                                                      ON DUPLICATE KEY UPDATE
+                                                      name='$protection_faculty'
+                                                      ");
+              //put department
+              $insert_d_query =  mysqli_query($con, "INSERT INTO department (name, faculty)
+                                                      VALUES ('$protection_department', '$protection_faculty')
+                                                      ON DUPLICATE KEY UPDATE
+                                                      name='$protection_department'
+                                                      ");
 
-               //check if they exist already
-               $chk_usr_exist = mysqli_query($con, "SELECT * FROM users WHERE user='$protection_reg_num' LIMIT 1");
+              if(!$user_input_query || !$insert_f_query || !$insert_d_query) {
+                $error_regs[] = $reg_num;
+              }
 
-               if(mysqli_num_rows($chk_usr_exist) > 0) {
-                 $existing_regs[] = $reg_num;
-               } else {
-                 $user_input_query = mysqli_query($con, "INSERT INTO users (id, user, pass, mail, valid, candidates, faculty, department, level) VALUES (NULL, '$protection_reg_num', '', '', 0, '', '$protection_faculty', '$protection_department', '$protection_level')");
-                 if(!$user_input_query) {
-                   $error_regs[] = $reg_num;
-                 }
-               }
           }
       }
 
-      if(count($error_regs) > 0 || count($existing_regs) > 0) {
-        $result[] = $existing_regs;
+      if(count($error_regs) > 0) {
         $result[] = $error_regs;
       } else {
-        $result = 2;
+        $result = 'Students registered successfully';
       }
 
-      print_r($result);
+      return $result;
     }
     if(isset($_POST['csvFile'])) {
       print_r(registerStudents($_POST['csvFile']));
@@ -387,6 +458,26 @@
     }
     if(isset($_GET['electionDel']) && isset($_GET['positionDel']) && isset($_GET['candidateDel'])) {
       print_r(deleteCandidates($_GET['electionDel'], $_GET['positionDel'], $_GET['candidateDel']));
+    }
+
+
+
+
+    //electiontype list
+    function getSelectList($type) {
+      $list = [];
+      require ('connect.php');
+
+      $election_type_query = mysqli_query($con, "SELECT * FROM $type");
+
+      while($row = mysqli_fetch_assoc($election_type_query)) {
+        $list[] = decodeValue($row['name']);
+      }
+
+      return $list;
+    }
+    if(isset($_POST['election_type'])) {
+      print_r(getSelectList($_POST['election_type']));
     }
 
   } else {

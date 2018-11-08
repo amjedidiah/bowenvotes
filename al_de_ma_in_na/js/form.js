@@ -5,8 +5,29 @@ const formControlValidate = (a) => {
       id = a.attr('id'),
       msg
 
-  if(id === 'electionName') {
-    msg = 'nice'
+  if(id === 'est' && val !== 'General') {
+    //run function
+    $.ajax({
+      type: 'POST',
+      url: './action.php?jsDoc=yes',
+      beforeSend: function() {
+        // a.parent().parent().find('#class-announcer').toggle().html('Fetching '+val+'s').addClass('animated bounce infinite')
+        a.parent().parent().find('#esc').toggle().addClass('animated bounce infinite')
+        a.parent().parent().find('#class-announcer').html('Fetching...')
+      },
+      data: 'election_type='+val,
+      success: function(data) {
+        esc = document.querySelector('#esc')
+
+        // data.forEach((a, b) => {
+        //   esc.createElement('option').createTextNode(a)
+        //
+        //
+        // })
+
+        console.log(typeof data, data)
+      }
+    })
   }
 
 

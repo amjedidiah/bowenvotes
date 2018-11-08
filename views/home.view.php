@@ -14,8 +14,8 @@
   </div>
 
   <div class="col-12 col-lg-6 homeBody-child">
-    <p href='#' class='logo color-1 text-center mb-5 d-lg-none'>
-      <i class="far fa-check-square color-3"></i> bowenuniversityvotes
+    <p href='#' class='logo color-1 text-center mb-2 d-lg-none'>
+      <i class="far fa-check-square color-3"></i><span class='d-none d-sm-block'> bowenuniversityvotes</span>
     </p>
     <form id='formValidate' class='form1'>
       <div class="form-group">

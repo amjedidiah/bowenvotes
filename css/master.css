@@ -10,8 +10,16 @@ body, html {
   height: 100%;
 }
 
+a {
+  text-decoration: none !important;
+}
+
 .fixed {
   position: fixed
+}
+
+.hide {
+  display: none
 }
 
 .bg-1 {
@@ -41,10 +49,18 @@ body, html {
 }
 
 .logo {
-  font-size: 250%;
+  font-size: 350%;
   font-weight: 900;
   animation-name: flipInY;
   animation-duration: 2s;
+  padding-top: 30px;
+  /*animation-iteration-count: infinite;*/
+}
+
+.logo-dashboard {
+  font-size: 200%;
+  padding-top: 0px;
+  display: flex
   /*animation-iteration-count: infinite;*/
 }
 
@@ -82,11 +98,11 @@ form {
     padding: 5%;
 }
 
-form .form-control {
+ form .form-control {
     border: 1px solid #7a8084;
     background: transparent !important;
     box-shadow: none !important;
-    padding: 5%;
+    /* padding: 2.5%; */
 
     transition: transform 0.5s;
 }
@@ -95,9 +111,9 @@ form .form-control:focus {
     border: 1px solid #6edaa1;
 }
 
-form.form1 .form-control:focus {
-    transform: scale(1.05);
-    color: #fff;
+form .form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100px #fff inset !important;
+    -webkit-text-fill-color: #495057 !important;
 }
 
 form.form1 .form-control:-webkit-autofill {
@@ -107,6 +123,11 @@ form.form1 .form-control:-webkit-autofill {
 
 form.form1 .form-control:-webkit-autofill:focus {
   -webkit-text-fill-color: #fff !important;
+}
+
+form.form1 .form-control:focus {
+    transform: scale(1.05);
+    color: #fff;
 }
 
 form .btn {
@@ -142,8 +163,16 @@ div.sub-msg-visible {
 
 
 /* Media Query */
-@media only screen and (max-width: 992px) {
+@media only screen and (min-width: 567px) {
   .logo {
-    font-size: 180%
+    font-size: 270%;
+    padding-top: 0;
   }
+  .logo span {
+    display: inline !important
+  }
+}
+
+@media only screen and (min-width: 992px) {
+
 }
