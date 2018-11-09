@@ -1,4 +1,14 @@
 /* CSS */
+body {
+}
+
+.logo {
+  font-size: 145%;
+  margin: 0;
+  padding: 0;
+  font-weight: 900
+}
+
 .dashboard-view {
 }
 
@@ -48,21 +58,75 @@ li.nav-item a.active span i, li a:hover span i {
   display: block
 }
 
+div.tab-pane {
+    padding-top: 100px;
+}
+
+div.tab-pane div.tab-pane-baby {
+    box-shadow: 0.4px 0.5px 0.5px 0.5px #ccc;
+    padding: 7%;
+    border-radius: 10px;
+    margin-bottom: 80px
+}
+
+div.tab-pane h1, div.tab-pane h2, div.tab-pane h5 {
+    text-align: left;
+    font-weight: 700
+}
+
+div.position-row {
+  margin-left: -10%;
+  margin-right: -10%;
+}
+
+div.position {
+  text-align: center;
+  padding: 10%;
+  background: rgba(110,218,161, 0.5);
+  color: #fff;
+  text-transform: uppercase;
+
+  transition: transform 1s, border 1s
+}
+
+div.position:hover {
+  background: rgba(110,218,161, 1);
+  transform: scale(1.05);
+}
+
+div.pop-over {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  overflow: auto;
+  padding: 80px 5%;
+  display: none  
+}
 
 
 
 /* ADMIN */
+form {
+  margin-left: -5%;
+  margin-right: -5%;
+}
+
 .upload-div {
-  border: 3px dashed #7a8084;
   position: relative;
-  height: 200px
+  margin-bottom: 50%;
 }
 
 .upload-div p, .upload-div .form-group input {
   position: absolute;
-  height: 100%;
+  height: auto;
   width: 100%;
-  padding: 8.5%;
+  padding: 10%;
+  margin: 0
+}
+
+.upload-div p {
+  border: 1px dashed #6edaa1;
 }
 
 .upload-div .form-group input {

@@ -7,12 +7,9 @@
 </head>
 <body class=''>
 <div class="container-fluid h-100 page">
-  <div class="row p-3 fixed dashboard-header">
+  <div class="row p-3 fixed dashboard-header d-none d-sm-block">
     <div class="col justify-content-between">
-
-      <p href='#' class='logo color-3 text-center'>bowenuniversityvotes</p>
-
-      <span class='logout dummy-link d-none'>
+      <span class='logout dummy-link'>
         Logout
       </span>
     </div>
@@ -20,26 +17,29 @@
 
   <div class='row h-100'>
 
-    <div class="col-2 dashboard-header-side fixed bg-2 text-center d-none d-lg-block">
+    <div class="col-2 dashboard-header-side fixed bg-2 text-center d-none d-sm-block">
       <p href='#' class='logo color-1 text-center'>
         <i class="far fa-check-square color-1 mt-5"></i>
       </p>
 
       <ul class="nav flex-column text-left" id="v-tab" role="list" aria-orientation="vertical">
         <li class="nav-item">
-          <a class="nav-link"  id="v-students-tab" data-toggle="pill" href="#v-students" role="tab" aria-controls="v-students" aria-selected="false">Students</a>
+          <a class="nav-link" id="v-feed-tab" data-toggle="pill" href="#v-feed" role="tab" aria-controls="v-feed" aria-selected="true">Feed</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active"  id="v-students-tab" data-toggle="pill" href="#v-students" role="tab" aria-controls="v-students" aria-selected="false">Students</a>
         </li>
         <li class="nav-item">
           <a class="nav-link"  id="v-elections-tab" data-toggle="pill" href="#v-elections" role="tab" aria-controls="v-elections" aria-selected="false">Elections</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link"  id="v-results-tab" data-toggle="pill" href="#v-results" role="tab" aria-controls="v-results" aria-selected="false">Results</a>
-        </li>
       </ul>
 
     </div>
-    <div class="col dashboard-header-side dashboard-header-bottom fixed bg-2 text-center d-lg-none">
+    <div class="col dashboard-header-side dashboard-header-bottom fixed bg-2 text-center d-sm-none">
       <ul class="nav justify-content-around" id="h-tab" role="list" aria-orientation="horizontal">
+        <!-- <li class="nav-item">
+          <a class="nav-link" id="v-feed-tab" data-toggle="pill" href="#v-feed" role="tab" aria-controls="v-feed" aria-selected="true"><i class="fas fa-comment-alt"></i><span>Feed</span></a>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link active"  id="v-students-tab" data-toggle="pill" href="#v-students" role="tab" aria-controls="v-students" aria-selected="false"><i class="fas fa-users"></i><span>Students</span></a>
         </li>
@@ -59,23 +59,23 @@
 
     <div class="col h-100 offset-lg-2">
       <div class="row h-100 dashboard-view">
-        <div class="col h-100 tab-content" id="v-tabContent">
+        <div class="col h-100 text-center tab-content" id="v-tabContent">
           <!-- <div class="tab-pane fade" id="v-feed" role="tabpanel" aria-labelledby="v-feed-tab" style='border: 1px solid red'>
             No feeds to display
           </div> -->
           <div class="row tab-pane fade show active h-100" id="v-students" role="tabpanel" aria-labelledby="v-students-tab">
-            <div class="tab-pane-baby col-10 offset-1">
+            <div class="col vertical-center">
 
-              <h5 class=''>Register Your Students</h5>
+              <h3 class='text-left'>Register Your Students</h3>
 
               <form id='csvUpload' class="form1 dashboard-baby" action="action.php?jsDoc=1" method="post" enctype="multipart/form-data" target="upload_target">
 
                 <div class='upload-div'>
-                  <p class='upload-txt text-center'>
+                  <p class='upload-txt'>
                     Drop your .CSV file here or Click to Browse
                   </p>
                   <div class='form-group input-parent'>
-                    <input type="file" id='csvFile' name="csv_file" accept=".csv" class='form-control form-control-validated-file'>
+                    <input type="file" id='csvFile' name="csv_file" accept=".csv" class='form-control form-control-validated-file p-5'>
                     <small id="csvFileHelp" class="form-text text-muted color-err"></small>
                   </div>
                 </div>
@@ -88,16 +88,12 @@
               </form>
 
             </div>
-            <div class="tab-pane-baby col-10 offset-1">
-              <h5>Students Search</h5>
-              <p>Coming soon</p>
-            </div>
           </div>
           <div class="row tab-pane fade h-100" id="v-elections" role="tabpanel" aria-labelledby="v-elections-tab">
 
-            <div class="tab-pane-baby col-10 offset-1" id='electionCreationDiv'>
+            <div class="col" id='electionCreationDiv'>
 
-              <h5 class=''>Create an Election</h5>
+              <h3 class=''>Create an Election</h3>
               <form id='formCreateElection' class='form form2 text-left'>
 
                 <div class="form-group">
@@ -126,30 +122,25 @@
               </form>
 
             </div>
-            <div class="tab-pane-baby col-10 offset-1">
-              <h5>Election Search</h5>
-              <p>Coming soon</p>
-            </div>
-
-            <div id='elections'>
-              <div class="tab-pane-baby col-10 offset-1">
-                <h5>Election 1</h5>
-                <form id='formCreatePosition' class='form form2 text-left'>
-
-                  <div class="form-group">
-                    <input name='positionName' type="text" class="form-control" id="positionName" aria-describedby="positionNameHelp" placeholder="Position Name" min='5' required>
-                    <small id="positionNameHelp" class="form-text text-muted color-err"></small>
-                  </div>
-                  <div class="sub-msg" id='sub-msg'></div>
-                </form>
-                <div class='row position-row'>
-                  <div class='col-6 position'>Position 1</div>
-                  <div class='col-6 position'>Position 1</div>
-                  <div class='col-6 position'>Position 1</div>
-                  <div class='col-6 position'>Position 1</div>
-                  <div class='col-6 position'>Position 1</div>
+            <div class='col' id='electionList'>
+              <h3 class=''>Your Elections</h3>
+              <div class="card-columns">
+                <div class="card bg-primary text-white text-center p-3">
+                  <blockquote class="blockquote mb-0">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.</p>
+                    <footer class="blockquote-footer">
+                      <small>
+                        Someone famous in <cite title="Source Title">Source Title</cite>
+                      </small>
+                    </footer>
+                  </blockquote>
+                </div>
+                <div class="card">
+                  <img class="card-img" src=".../100px260/" alt="Card image">
                 </div>
               </div>
+
+
             </div>
 
 
@@ -164,10 +155,5 @@
       </div>
     </div>
 
-
-
-    <div class="pop-over">
-      hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hby
-    </div>
   </div>
 </div>

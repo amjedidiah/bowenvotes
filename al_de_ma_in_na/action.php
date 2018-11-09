@@ -486,6 +486,8 @@
       print_r(getSelectList($_POST['election_type']));
     }
 
+
+    //create election
     function createElection($es_n, $es_t, $es_c) {
 
       require('connect.php');
@@ -504,7 +506,8 @@
       } else {
         $query_election_create = mysqli_query($con, "INSERT INTO elections (id, name, type, class) VALUES (NULL, '$protection_es_n', '$protection_es_t', '$protection_es_c')");
         if($query_election_create) {
-          return '2';
+
+          return 'Election created<br />Scroll down to see your elections';
         } else {
           return 'Please try again';
         }

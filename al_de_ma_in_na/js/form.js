@@ -39,6 +39,30 @@ $('.form-control-validated').change(function() {
 
 
 
+
+const submitFormHandler = (form, data) => {
+
+  switch (data) {
+    case 'election_created':
+
+      break;
+    case '2':
+      data = 'Success'
+      window.location = './'
+      break;
+    default:
+      console.log('')
+  }
+
+  let subMsg = form.querySelector('div#sub-msg')
+  subMsg.className = 'sub-msg-visible'
+  subMsg.innerHTML = data
+
+}
+
+
+
+
 const submitForm = (form, upDet, err=0) => {
 
 
@@ -94,17 +118,8 @@ const submitForm = (form, upDet, err=0) => {
       },
       data: inputs,
       success: function(data) {
-
-        form.querySelector('div#sub-msg').className = 'sub-msg-visible'
         btn.innerHTML = btnHTML
-
-        if(data === '2') {
-          data = 'Success'
-          window.location = './'
-        }
-        form.querySelector('div#sub-msg').innerHTML = data
-
-        console.log(data)
+        submitFormHandler(form, data)
       }
     }) : 'no'
   }
@@ -116,6 +131,7 @@ document.querySelectorAll('form').forEach((a,b) => {
     submitForm(a, false)
   })
 })
+
 
 
 
