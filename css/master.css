@@ -142,6 +142,10 @@ form .btn:hover, form .btn:focus, form .btn:active {
   box-shadow: none;
 }
 
+form select option {
+  text-transform: capitalize;
+}
+
 form.form1 .btn:hover {
   transform: scale(1.05);
 }

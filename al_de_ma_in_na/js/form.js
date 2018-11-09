@@ -5,29 +5,28 @@ const formControlValidate = (a) => {
       id = a.attr('id'),
       msg
 
-  if(id === 'est' && val !== 'General') {
-    //run function
-    $.ajax({
-      type: 'POST',
-      url: './action.php?jsDoc=yes',
-      beforeSend: function() {
-        // a.parent().parent().find('#class-announcer').toggle().html('Fetching '+val+'s').addClass('animated bounce infinite')
-        a.parent().parent().find('#esc').toggle().addClass('animated bounce infinite')
-        a.parent().parent().find('#class-announcer').html('Fetching...')
-      },
-      data: 'election_type='+val,
-      success: function(data) {
-        esc = document.querySelector('#esc')
+  if(id === 'est') {
+    if(val !== 'General') {
+      $.ajax({
+        type: 'POST',
+        url: './action.php?jsDoc=yes',
+        data: 'election_type='+val,
+        success: function(data) {
+          let esc = document.querySelector('#esc')
+              data = JSON.parse(data)
 
-        // data.forEach((a, b) => {
-        //   esc.createElement('option').createTextNode(a)
-        //
-        //
-        // })
+          a.parent().parent().find('#esc').show().addClass('animated fadeInUp')
+          esc.innerHTML = `<option id='class-announcer' disabled selected value>Select a ${val}</option>`
+          esc.required
 
-        console.log(typeof data, data)
-      }
-    })
+          data.forEach((a, b) => {
+            esc.innerHTML += `<option>${a}</option>`
+          })
+        }
+      })
+    } else {
+      a.parent().parent().find('#esc').hide().addClass('animated fadeInUp')
+    }
   }
 
 

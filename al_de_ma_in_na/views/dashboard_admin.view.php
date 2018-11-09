@@ -97,12 +97,12 @@
               <form id='formCreateElection' class='form form2 text-left'>
 
                 <div class="form-group">
-                  <input type="text" class="form-control" id="electionName" aria-describedby="electionNameHelp" placeholder="Election Name" min='5' required>
+                  <input name='electionName' type="text" class="form-control" id="electionName" aria-describedby="electionNameHelp" placeholder="Election Name" min='5' required>
                   <small id="electionNameHelp" class="form-text text-muted color-err"></small>
                 </div>
 
                 <div class="form-group">
-                  <select class="form-control form-control-validated" id="est" aria-describedby="electionTypeHelp" placeholder='Election Type' required>
+                  <select name='est' class="form-control form-control-validated" id="est" aria-describedby="electionTypeHelp" placeholder='Election Type' required>
                     <option disabled selected value>Election Type</option>
                     <option>General</option>
                     <option>Faculty</option>
@@ -112,8 +112,7 @@
                 </div>
 
                 <div class="form-group">
-                  <select class="form-control hide" id="esc" aria-describedby="electionClassHelp" required>
-                    <option id='class-announcer' disabled selected value>No class selected</option>
+                  <select name='esc' class="form-control hide" id="esc" aria-describedby="electionClassHelp">
                   </select>
                 </div>
 
