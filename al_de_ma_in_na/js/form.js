@@ -1,46 +1,4 @@
 // js
-
-const formSubmitEvent = () => {
-  document.querySelectorAll('form').forEach((a,b) => {
-    a.addEventListener('submit', (event) => {
-      event.preventDefault()
-      submitForm(a, false)
-    })
-  })
-}
-
-
-
-
-
-const fileChangeEvent = () => {
-  //on change file inputs
-  document.querySelectorAll(".form-control-validated-file").forEach((a,b) => {
-    a.addEventListener('change', (event) => {
-      let form = a.parentElement.parentElement.parentElement,
-          msg = ''
-
-        if (a.files && a.files[0]) {
-          if(a.accept === ".csv") {
-            if (a.files[0].type === 'application/vnd.ms-excel') {
-              msg = ''
-              submitForm(form, true)
-            } else {
-              msg = 'Please upload a CSV file'
-            }
-          }
-        }
-
-        // a.parentElement.children[1].innnerHTML = 'hello'
-        let z = a.parentElement.children[1].textContent = msg
-    })
-  })
-}
-
-
-
-
-
 const formControlValidate = (a) => {
   let val = a.val(),
       id = a.attr('id'),
@@ -81,10 +39,6 @@ const formControlValidate = (a) => {
       url: './action.php?jsDoc=yes',
       data: 'position_name_check='+val+'&election_position_name_check='+election,
       success: function(data) {
-
-        formSubmitEvent()
-        fileChangeEvent()
-
         msg = data
         a.parent().find('small').html(msg)
       }
@@ -189,37 +143,64 @@ const submitForm = (form, upDet, err=0) => {
     })
 
     let fields = form.querySelectorAll('.form-control'),
-        inputs = {}
-    Object.keys(fields).forEach((a) => inputs[fields[a].id] = fields[a].value)
+        inputs = ''
 
-    const answer = err === 0 ? $.ajax({
-      type: 'POST',
-      url: './action.php?jsDoc=yes',
-      beforeSend: function() {
-        btn.innerHTML = `<i class="fas fa-spinner fa-pulse"></i>`
-      },
-      data: inputs,
-      success: function(data) {
+    fields.forEach((a,b) => {
+      if(fields.length - 1 === b) {
+        inputs += fields[b].id+'='+fields[b].value
+      } else {
+        inputs += fields[b].id+'='+fields[b].value+'&'
+      }
+    })
 
-        formSubmitEvent()
-        fileChangeEvent()
-        
+    xhttp = new XMLHttpRequest()
+    xhttp.onloadstart = () => {
+      btn.innerHTML = `<i class="fas fa-spinner fa-pulse"></i>`
+    }
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        let data = this.responseText
+
         btn.innerHTML = btnHTML
 
         if(data.includes('Add Position')) {
-          $('#elections').html(data).addClass('animated fadeInUp')
+          let electionDiv = document.querySelector('#elections')
 
+          electionDiv.innerHTML = data
+          electionDiv.classList.add('animated','fadeInUp')
           data = 'refresh_election'
         }
-
-        formSubmitEvent()
-        fileChangeEvent()
-
         submitFormHandler(form, data)
       }
-    }) : 'no'
+    }
+    xhttp.open("GET", "action.php?"+inputs, true)
+    xhttp.send()
   }
 
 }
-formSubmitEvent()
-fileChangeEvent()
+document.querySelectorAll('form').forEach((a,b) => {
+    a.addEventListener('submit', (event) => {
+      event.preventDefault()
+      submitForm(a, false)
+    })
+})
+document.querySelectorAll(".form-control-validated-file").forEach((a,b) => {
+  a.addEventListener('change', (event) => {
+    let form = a.parentElement.parentElement.parentElement,
+        msg = ''
+
+      if (a.files && a.files[0]) {
+        if(a.accept === ".csv") {
+          if (a.files[0].type === 'application/vnd.ms-excel') {
+            msg = ''
+            submitForm(form, true)
+          } else {
+            msg = 'Please upload a CSV file'
+          }
+        }
+      }
+
+      // a.parentElement.children[1].innnerHTML = 'hello'
+      let z = a.parentElement.children[1].textContent = msg
+  })
+})

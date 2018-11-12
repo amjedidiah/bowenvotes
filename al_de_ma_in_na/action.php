@@ -125,7 +125,8 @@
   }
 
 
-  if(isset($_GET['jsDoc']))  {
+
+
 
     //signin
     function signIn($loginID, $loginPass) {
@@ -150,8 +151,8 @@
         }
       }
     }
-    if(isset($_POST['loginID']) && isset($_POST['loginPass'])) {
-      print_r(signIn($_POST['loginID'], $_POST['loginPass']));
+    if(isset($_REQUEST['loginID']) && isset($_REQUEST['loginPass'])) {
+      print_r(signIn($_REQUEST['loginID'], $_REQUEST['loginPass']));
     }
 
 
@@ -267,8 +268,8 @@
 
       return $result;
     }
-    if(isset($_POST['csvFile'])) {
-      print_r(registerStudents($_POST['csvFile']));
+    if(isset($_REQUEST['csvFile'])) {
+      print_r(registerStudents($_REQUEST['csvFile']));
     }
 
 
@@ -357,8 +358,8 @@
         }
       }
     }
-    if(isset($_POST['electionName']) && isset($_POST['est']) && isset($_POST['esc'])) {
-      print_r(createElection($_POST['electionName'], $_POST['est'], $_POST['esc']));
+    if(isset($_REQUEST['electionName']) && isset($_REQUEST['est']) && isset($_REQUEST['esc'])) {
+      print_r(createElection($_REQUEST['electionName'], $_REQUEST['est'], $_REQUEST['esc']));
     }
 
 
@@ -375,8 +376,8 @@
 
       return json_encode($list);
     }
-    if(isset($_POST['election_type'])) {
-      print_r(getSelectList($_POST['election_type']));
+    if(isset($_REQUEST['election_type'])) {
+      print_r(getSelectList($_REQUEST['election_type']));
     }
 
 
@@ -399,8 +400,8 @@
         return 'Position already exists';
       }
     }
-    if(isset($_POST['position_name_check']) && isset($_POST['election_position_name_check'])) {
-      print_r(electionPositionCheck($_POST['election_position_name_check'], $_POST['position_name_check']));
+    if(isset($_REQUEST['position_name_check']) && isset($_REQUEST['election_position_name_check'])) {
+      print_r(electionPositionCheck($_REQUEST['election_position_name_check'], $_REQUEST['position_name_check']));
     }
 
 
@@ -434,10 +435,9 @@
       }
 
 
-
     }
-    if(isset($_POST['electionName']) && isset($_POST['positionName']) && !isset($_POST['candidateName']) && !isset($_POST['vote'])) {
-      print_r(createPositions($_POST['electionName'], $_POST['positionName']));
+    if(isset($_REQUEST['electionName']) && isset($_REQUEST['positionName']) && !isset($_REQUEST['candidateName']) && !isset($_REQUEST['vote'])) {
+      print_r(createPositions($_REQUEST['electionName'], $_REQUEST['positionName']));
     }
 
 
@@ -497,8 +497,8 @@
       return $candidates;
 
     }
-    if(isset($_POST['candidatePosition']) && isset($_POST['candidateElection'])) {
-      loadCandidates($_POST['candidatePosition'], $_POST['candidateElection']);
+    if(isset($_REQUEST['candidatePosition']) && isset($_REQUEST['candidateElection'])) {
+      loadCandidates($_REQUEST['candidatePosition'], $_REQUEST['candidateElection']);
     }
 
 
@@ -522,8 +522,8 @@
         return 'me';
       }
     }
-    if(isset($_POST['election_candidate_name_check']) && isset($_POST['position_candidate_name_check']) && isset($_POST['candidate_name_check'])) {
-      print_r(electionCandidatesCheck($_POST['election_candidate_name_check'], $_POST['position_candidate_name_check'], $_POST['candidate_name_check']));
+    if(isset($_REQUEST['election_candidate_name_check']) && isset($_REQUEST['position_candidate_name_check']) && isset($_REQUEST['candidate_name_check'])) {
+      print_r(electionCandidatesCheck($_REQUEST['election_candidate_name_check'], $_REQUEST['position_candidate_name_check'], $_REQUEST['candidate_name_check']));
     }
 
 
@@ -638,16 +638,5 @@
     if(isset($_GET['electionDel']) && isset($_GET['positionDel']) && isset($_GET['candidateDel'])) {
       print_r(deleteCandidates($_GET['electionDel'], $_GET['positionDel'], $_GET['candidateDel']));
     }
-
-
-
-
-
-
-    // print_r($_POST);
-
-  } else {
-    header('location: ./404.php');
-  }
 
 ?>
