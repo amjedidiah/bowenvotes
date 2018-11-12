@@ -62,7 +62,7 @@ div.tab-pane {
     padding-top: 100px;
 }
 
-div.tab-pane div.tab-pane-baby {
+div.tab-pane div.tab-pane-baby, div.candidate {
     box-shadow: 0.4px 0.5px 0.5px 0.5px #ccc;
     padding: 7%;
     border-radius: 10px;
@@ -85,11 +85,12 @@ div.position {
   background: rgba(110,218,161, 0.5);
   color: #fff;
   text-transform: uppercase;
+  border: 2px solid #fff;
 
-  transition: transform 1s, border 1s
+  transition: transform 0.5s, background 0.5s
 }
 
-div.position:hover {
+div.position:hover, div.candidate:hover {
   background: rgba(110,218,161, 1);
   transform: scale(1.05);
 }
@@ -101,9 +102,21 @@ div.pop-over {
   background: #fff;
   overflow: auto;
   padding: 80px 5%;
-  display: none  
+  display: none;
 }
 
+div.candidates {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+div.candidate {
+  padding: 10%;
+  margin: 10px 0;
+
+  transition: transform 0.5s, background 0.5s
+}
 
 
 /* ADMIN */

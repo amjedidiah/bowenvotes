@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 09, 2018 at 04:07 PM
--- Server version: 5.7.14
--- PHP Version: 7.0.10
+-- Host: 127.0.0.1:3306
+-- Generation Time: Nov 12, 2018 at 05:28 AM
+-- Server version: 5.7.23
+-- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,13 +28,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `candidates`
 --
 
-CREATE TABLE `candidates` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `candidates`;
+CREATE TABLE IF NOT EXISTS `candidates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `position` varchar(255) NOT NULL,
   `election` varchar(255) NOT NULL,
-  `votes` int(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -40,9 +43,11 @@ CREATE TABLE `candidates` (
 -- Table structure for table `department`
 --
 
-CREATE TABLE `department` (
+DROP TABLE IF EXISTS `department`;
+CREATE TABLE IF NOT EXISTS `department` (
   `name` varchar(255) NOT NULL,
-  `faculty` varchar(255) NOT NULL
+  `faculty` varchar(255) NOT NULL,
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -66,11 +71,13 @@ INSERT INTO `department` (`name`, `faculty`) VALUES
 -- Table structure for table `ed6d1dbcfceec0db6d0989fb54528b99`
 --
 
-CREATE TABLE `ed6d1dbcfceec0db6d0989fb54528b99` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `ed6d1dbcfceec0db6d0989fb54528b99`;
+CREATE TABLE IF NOT EXISTS `ed6d1dbcfceec0db6d0989fb54528b99` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` varchar(255) NOT NULL,
-  `pass` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `pass` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ed6d1dbcfceec0db6d0989fb54528b99`
@@ -85,12 +92,14 @@ INSERT INTO `ed6d1dbcfceec0db6d0989fb54528b99` (`id`, `user`, `pass`) VALUES
 -- Table structure for table `elections`
 --
 
-CREATE TABLE `elections` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `elections`;
+CREATE TABLE IF NOT EXISTS `elections` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `type` varchar(1500) NOT NULL,
-  `class` varchar(1500) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `class` varchar(1500) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `elections`
@@ -139,7 +148,24 @@ INSERT INTO `elections` (`id`, `name`, `type`, `class`) VALUES
 (40, 'sa_al_ja_na_sa_al', 'ga_ec_na_ec_ra_al_li', 'ze'),
 (41, 'sa_al_ja_na_sa_al_ka', 'ga_ec_na_ec_ra_al_li', 'ze'),
 (42, 'na_li_na_li_na_sa_ka_li_na', 'fa_al_ca_un_li_ta_ya', 'al_ra_ta_sa'),
-(43, 'sa_li_na_sa_al_ca', 'ga_ec_na_ec_ra_al_li', 'ze');
+(43, 'sa_li_na_sa_al_ca', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(44, 'li_ka_sa', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(45, 'li_ka_sa_na_he', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(46, 'li_ka_na', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(47, 'li_ka_ma', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(48, 'li_ka_li_ka_sa', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(49, 'ze_li_ka_ka_li_na', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(50, 'ja_ec_de_in_de_in_al_he', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(51, 'he_ec_al_sa', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(52, 'na_he_ga_sa', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(53, 'he_al_ba_in_ba', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(54, 'ba_ec_li_os', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(55, 'ba_ga_ec_de', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(56, 'ba_os_ya_ec_ga_al', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(57, 'ba_os_ya_ec_ga', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(58, 'na_he_ga', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(59, 'ba_os_ba_os_ya', 'ga_ec_na_ec_ra_al_li', 'ze'),
+(60, 'ma_al_na_in', 'ga_ec_na_ec_ra_al_li', 'ze');
 
 -- --------------------------------------------------------
 
@@ -147,8 +173,10 @@ INSERT INTO `elections` (`id`, `name`, `type`, `class`) VALUES
 -- Table structure for table `faculty`
 --
 
-CREATE TABLE `faculty` (
-  `name` varchar(255) NOT NULL
+DROP TABLE IF EXISTS `faculty`;
+CREATE TABLE IF NOT EXISTS `faculty` (
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -168,10 +196,12 @@ INSERT INTO `faculty` (`name`) VALUES
 -- Table structure for table `level`
 --
 
-CREATE TABLE `level` (
+DROP TABLE IF EXISTS `level`;
+CREATE TABLE IF NOT EXISTS `level` (
   `name` varchar(255) NOT NULL,
   `department` varchar(255) NOT NULL,
-  `faculty` varchar(255) NOT NULL
+  `faculty` varchar(255) NOT NULL,
+  PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -191,11 +221,24 @@ INSERT INTO `level` (`name`, `department`, `faculty`) VALUES
 -- Table structure for table `positions`
 --
 
-CREATE TABLE `positions` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `positions`;
+CREATE TABLE IF NOT EXISTS `positions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `election` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `election` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `positions`
+--
+
+INSERT INTO `positions` (`id`, `name`, `election`) VALUES
+(11, 'li_ka_ja', 'on_ze_ze_cl_li_cl_ec_li_ec_ca_ta_in_os_na'),
+(12, 'he_ec_li_li_os', 'li_ka_li_li'),
+(13, 'ze_ka_ze', 'li_ka_na_li_ka'),
+(14, 'na_he_ga', 'ba_ec_li_os'),
+(15, 'ca_fa', 'ma_al_na_in');
 
 -- --------------------------------------------------------
 
@@ -203,7 +246,8 @@ CREATE TABLE `positions` (
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
   `user` varchar(255) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `mail` varchar(255) NOT NULL,
@@ -211,7 +255,8 @@ CREATE TABLE `users` (
   `candidates` varchar(1500) NOT NULL,
   `faculty` varchar(255) NOT NULL,
   `department` varchar(255) NOT NULL,
-  `level` varchar(255) NOT NULL
+  `level` varchar(255) NOT NULL,
+  PRIMARY KEY (`user`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -231,83 +276,8 @@ INSERT INTO `users` (`user`, `pass`, `mail`, `valid`, `candidates`, `faculty`, `
 ('tw_ze_on_fi_sl_on_ei_on_si_fi_on', '', '', 0, '', 'pa_he_al_ra_ma_al_ca_ya', 'pa_he_al_ra_ma_al_ca_ya', 'fo_ze_ze'),
 ('tw_ze_on_th_sl_se_tw_on_tw_ni_ei', '', '', 0, '', 'al_ra_ta_sa', 'li_in_na_ga_un_in_sa_ta_in_ca_sa', 'fo_ze_ze'),
 ('tw_ze_on_tw_sl_on_ei_tw_si_si_on', '', '', 0, '', 'ec_na_ga_in_na_ec_ec_ra_in_na_ga', 'ec_ca_ec', 'fi_ze_ze');
+COMMIT;
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `candidates`
---
-ALTER TABLE `candidates`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `department`
---
-ALTER TABLE `department`
-  ADD PRIMARY KEY (`name`);
-
---
--- Indexes for table `ed6d1dbcfceec0db6d0989fb54528b99`
---
-ALTER TABLE `ed6d1dbcfceec0db6d0989fb54528b99`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `elections`
---
-ALTER TABLE `elections`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `faculty`
---
-ALTER TABLE `faculty`
-  ADD PRIMARY KEY (`name`);
-
---
--- Indexes for table `level`
---
-ALTER TABLE `level`
-  ADD PRIMARY KEY (`name`);
-
---
--- Indexes for table `positions`
---
-ALTER TABLE `positions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`user`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `candidates`
---
-ALTER TABLE `candidates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `ed6d1dbcfceec0db6d0989fb54528b99`
---
-ALTER TABLE `ed6d1dbcfceec0db6d0989fb54528b99`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `elections`
---
-ALTER TABLE `elections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
---
--- AUTO_INCREMENT for table `positions`
---
-ALTER TABLE `positions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

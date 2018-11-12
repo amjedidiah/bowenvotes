@@ -6,6 +6,7 @@
 <script type="text/javascript" src='../js/pages.js'></script>
 <script type="text/javascript" src='./js/master.js'></script>
 <script type="text/javascript" src='./js/form.js'></script>
+<script type="text/javascript" src='./js/dashboard.js'></script>
 
   </body>
 </html>

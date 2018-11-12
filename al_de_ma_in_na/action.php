@@ -274,48 +274,260 @@
 
 
 
-    // ADMIN functions
+    //create election
+    function createElection($es_n, $es_t, $es_c) {
+
+      require('connect.php');
+
+      //md5 & hash table name
+      $protection_es_n = codeValue($es_n);
+      $protection_es_t = codeValue($es_t); //convert these ones to string to store them in db as string
+      $protection_es_c = codeValue($es_c);   //convert these ones to string to store them in db as string
+
+      //chk if election already exists
+      $query_election_name_check = mysqli_query($con, "SELECT * FROM elections WHERE name = '$protection_es_n' LIMIT 1");
+      $count = mysqli_num_rows($query_election_name_check);
+
+      if($count > 0) {
+        return 'An election already exists with this name';
+      } else {
+        $query_election_create = mysqli_query($con, "INSERT INTO elections (id, name, type, class) VALUES (NULL, '$protection_es_n', '$protection_es_t', '$protection_es_c')");
+        if($query_election_create) {
+
+          function getElections() {
+
+            $elections = "";
+
+            require('connect.php');
+            $query = mysqli_query($con, "SELECT * FROM elections ORDER BY id DESC");
+            $count = mysqli_num_rows($query);
+
+            if($count > 0) {
+              while($row = mysqli_fetch_assoc($query)) {
+
+                $protection_es_n = $row["name"];
+
+                $election = decodeValue($protection_es_n);
+
+                $elections .= '<div class="tab-pane-baby col-10 offset-1">
+                  <h5>'.$election.'</h5>
+                  <form id="formCreatePosition" class="form form2 text-left">
+                    <div class="form-group">
+                      <input election="'.$election.'" name="positionName" type="text" class="form-control form-control-validated" id="positionName" aria-describedby="positionNameHelp" placeholder="Position Name" min="5" required>
+                      <small id="positionNameHelp" class="form-text text-muted color-err"></small>
+                    </div>
+                    <div class="form-group d-none">
+                      <input name="ElectionName" value="'.$election.'" type="text" class="form-control form-control-validated" id="electionName" aria-describedby="ElectionNameHelp" placeholder="Election Name" min="5" disabled>
+                      <small id="ElectionNameHelp" class="form-text text-muted color-err"></small>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block bg-1 mt-3">Add Position</button>
+                    <div class="sub-msg" id="sub-msg"></div>
+                  </form>';
+
+                  //chk if positions exist
+                  $query_post = mysqli_query($con, "SELECT * FROM positions WHERE election='$protection_es_n'");
+
+                  if(mysqli_num_rows($query_post) > 0) {
+                    $elections .='
+                        <div class="row position-row">';
+                    while($row = mysqli_fetch_assoc($query_post)) {
+                      $protection_ep_n = $row['name'];
+                      $ep_n = decodeValue($protection_ep_n);
+                      $elections .='<div class="col position" id="'.$ep_n.'" election="'.$election.'">'.$ep_n.'</div>';
+                    }
+                    $elections .='
+                      </div>';
+                  }
+
+              $elections .='
+                </div>';
+
+              }
+            } else {
+              $elections = '';
+            }
+
+            return $elections;
+          }
+
+
+          return getElections();
+        } else {
+          return 'Please try again';
+        }
+      }
+    }
+    if(isset($_POST['electionName']) && isset($_POST['est']) && isset($_POST['esc'])) {
+      print_r(createElection($_POST['electionName'], $_POST['est'], $_POST['esc']));
+    }
+
+
+    //electiontype list
+    function getSelectList($type) {
+      $list = [];
+      require ('connect.php');
+
+      $election_type_query = mysqli_query($con, "SELECT * FROM $type");
+
+      while($row = mysqli_fetch_assoc($election_type_query)) {
+        $list[] = decodeValue($row['name']);
+      }
+
+      return json_encode($list);
+    }
+    if(isset($_POST['election_type'])) {
+      print_r(getSelectList($_POST['election_type']));
+    }
 
 
 
-    //Create elections
-    // function createElection($es_name, $es_f, $es_d, $es_l, $el_tab='elections') {
-    //
-    //   require('connect.php');
-    //
-    //   //es_f, es_d & es_l should be posted as arrays using AJAX and not put in $_GET;
-    //
-    //   //md5 & hash table name
-    //   $protection_es_name = codeValue($es_name);
-    //   $protection_es_f= codeValue(implode($es_f)); //convert these ones to string to store them in db as string
-    //   $protection_es_d = codeValue(implode($es_d));  //convert these ones to string to store them in db as string
-    //   $protection_es_l = codeValue(implode($es_l));  //convert these ones to string to store them in db as string
-    //
-    //   //chk if election already exists
-    //   $query_election_name_check = mysqli_query($con, "SELECT * FROM $el_tab WHERE name = '$protection_es_name' LIMIT 1");
-    //   $count = mysqli_num_rows($query_election_name_check);
-    //
-    //   if($count > 0) {
-    //     return 'error_ election exists';
-    //   } else {
-    //     $query_election_create = mysqli_query($con, "INSERT INTO $el_tab (id, name, faculty, department, level) VALUES (NULL, '$protection_es_name', '$protection_es_f', '$protection_es_d', '$protection_es_l')");
-    //     if($query_election_create) {
-    //       return 'success';
-    //     } else {
-    //       return 'error_election create';
-    //     }
-    //   }
-    //
-    // }
-    // if(isset($_GET['electionName']) && !isset($_GET['positionName']) && !isset($_GET['candidateName']) && !isset($_GET['vote'])) {
-    //
-    //   //change this to $_POST from AJAX document
-    //   $_POST['esf'] = array('Engineering', 'Pharmacy');
-    //   $_POST['esd'] = array('ECE', 'MME');
-    //   $_POST['esl'] = array(100, 200, 400);
-    //
-    //   print_r(createElection($_GET['electionName'], $_POST['esf'], $_POST['esd'], $_POST['esl']));
-    // }
+
+    //chk position
+    function electionPositionCheck($es_n, $ep_n) {
+
+      require('connect.php');
+
+      //md5 & hash table name
+      $protection_es_n = codeValue($es_n);  //convert these ones to string to store them in db as string
+      $protection_ep_n = codeValue($ep_n);
+
+      //chk if election already exists
+      $query_election_position_name_check = mysqli_query($con, "SELECT * FROM positions WHERE name = '$protection_ep_n' AND election='$protection_es_n' LIMIT 1");
+      $count = mysqli_num_rows($query_election_position_name_check);
+
+      if($count > 0) {
+        return 'Position already exists';
+      }
+    }
+    if(isset($_POST['position_name_check']) && isset($_POST['election_position_name_check'])) {
+      print_r(electionPositionCheck($_POST['election_position_name_check'], $_POST['position_name_check']));
+    }
+
+
+    //Create positions
+    function createPositions($es_name, $position_name, $el_tab='elections', $pos_tab='positions') {
+
+      //protect election & position
+      $protection_es_name = codeValue($es_name);
+      $protection_position_name = codeValue($position_name);
+
+      require('connect.php');
+      //chk if position already exists
+
+      $query_election_check = mysqli_query($con, "SELECT * FROM $el_tab WHERE name='$protection_es_name' LIMIT 1");
+      $query_position_check = mysqli_query($con, "SELECT * FROM $pos_tab WHERE name = '$protection_position_name' AND election = '$protection_es_name' LIMIT 1");
+      $count = mysqli_num_rows($query_position_check);
+
+      if(mysqli_num_rows($query_election_check) !== 1) {
+        return 'Please create an election first';
+      } else if($count > 0) {
+        return 'Position already exists';
+      } else {
+        $query_position_create = mysqli_query($con, "INSERT INTO $pos_tab (id, name, election) VALUES(NULL ,'$protection_position_name','$protection_es_name')");
+
+        if($query_position_create) {
+          return 'refresh_position';
+        } else {
+          return 'Please try again';
+        }
+
+      }
+
+
+
+    }
+    if(isset($_POST['electionName']) && isset($_POST['positionName']) && !isset($_POST['candidateName']) && !isset($_POST['vote'])) {
+      print_r(createPositions($_POST['electionName'], $_POST['positionName']));
+    }
+
+
+
+
+    //load candidates
+    function loadCandidates($ep_n, $es_n) {
+
+      $candidates = '';
+
+      //protection
+      $protection_ep_n = codeValue($ep_n);
+      $protection_es_n = codeValue($es_n);
+
+      require('connect.php');
+
+      //get candidates
+      $query_get_candidates = mysqli_query($con, "SELECT * FROM candidates WHERE position='$protection_ep_n' AND election='$protection_ep_n'");
+
+      if(mysqli_num_rows($query_get_candidates) > 0) {
+        $candidates = '<div class="candidate-div">
+
+          <form id="formCreateCandidate" class="form form2 text-left">
+
+            <div class="form-group">
+              <input name="candidateName" type="text" class="form-control" id="candidateName" aria-describedby="candidateNameHelp" placeholder="Candidate Name" min="5" required>
+              <small id="candidateNameHelp" class="form-text text-muted color-err"></small>
+            </div>
+            <div class="sub-msg" id="sub-msg"></div>
+          </form>
+          <div class="candidates">
+
+            <div class="candidate">
+              candidate
+            </div>
+            <div class="candidate">
+              candidate
+            </div>
+            <div class="candidate">
+              candidate
+            </div>
+            <div class="candidate">
+              candidate
+            </div>
+            <div class="candidate">
+              candidate
+            </div>
+            <div class="candidate">
+              candidate
+            </div>
+          </div>
+
+        </div>';
+
+      }
+
+      return $candidates;
+
+    }
+    if(isset($_POST['candidatePosition']) && isset($_POST['candidateElection'])) {
+      loadCandidates($_POST['candidatePosition'], $_POST['candidateElection']);
+    }
+
+
+    //chk candidates
+    function electionCandidatesCheck($es_n, $ep_n, $ec_n) {
+
+      require('connect.php');
+
+      //md5 & hash table name
+      $protection_es_n = codeValue($es_n);
+      $protection_ep_n = codeValue($ep_n);
+      $protection_ec_n = codeValue($ec_n);
+
+      //chk if election already exists
+      $query_election_position_name_check = mysqli_query($con, "SELECT * FROM candidates WHERE name = '$protection_ec_n' AND position='$protection_ep_n' AND election='$protection_es_n' LIMIT 1");
+      $count = mysqli_num_rows($query_election_position_name_check);
+
+      if($count > 0) {
+        return 'Position already exists';
+      } else {
+        return 'me';
+      }
+    }
+    if(isset($_POST['election_candidate_name_check']) && isset($_POST['position_candidate_name_check']) && isset($_POST['candidate_name_check'])) {
+      print_r(electionCandidatesCheck($_POST['election_candidate_name_check'], $_POST['position_candidate_name_check'], $_POST['candidate_name_check']));
+    }
+
+
+
 
     //delete election
     function deleteElection($es_name, $el_tab='elections', $pos_tab = 'positions', $can_tab = 'candidates') {
@@ -338,45 +550,6 @@
     }
     if(isset($_GET['electionDel']) && !isset($_GET['positionDel']) && !isset($_GET['candidateDel'])) {
       print_r(deleteElection($_GET['electionDel']));
-    }
-
-
-
-
-    //Create positions
-    function createPositions($es_name, $position_name, $el_tab='elections', $pos_tab='positions') {
-
-      //protect election & position
-      $protection_es_name = codeValue($es_name);
-      $protection_position_name = codeValue($position_name);
-
-      require('connect.php');
-      //chk if position already exists
-
-      $query_election_check = mysqli_query($con, "SELECT * FROM $el_tab WHERE name='$protection_es_name' LIMIT 1");
-      $query_position_check = mysqli_query($con, "SELECT * FROM $pos_tab WHERE name = '$protection_position_name' AND election = '$protection_es_name' LIMIT 1");
-      $count = mysqli_num_rows($query_position_check);
-
-      if(mysqli_num_rows($query_election_check) !== 1) {
-        return 'error_position election_not_found';
-      } else if($count > 0) {
-        return 'error_position exists';
-      } else {
-        $query_position_create = mysqli_query($con, "INSERT INTO $pos_tab (id, name, election) VALUES(NULL ,'$protection_position_name','$protection_es_name')");
-
-        if($query_position_create) {
-          return 'success';
-        } else {
-          return 'error_position create';
-        }
-
-      }
-
-
-
-    }
-    if(isset($_GET['electionName']) && isset($_GET['positionName']) && !isset($_GET['candidateName']) && !isset($_GET['vote'])) {
-      print_r(createPositions($_GET['electionName'], $_GET['positionName']));
     }
 
     //Delete positions
@@ -469,53 +642,7 @@
 
 
 
-    //electiontype list
-    function getSelectList($type) {
-      $list = [];
-      require ('connect.php');
 
-      $election_type_query = mysqli_query($con, "SELECT * FROM $type");
-
-      while($row = mysqli_fetch_assoc($election_type_query)) {
-        $list[] = decodeValue($row['name']);
-      }
-
-      return json_encode($list);
-    }
-    if(isset($_POST['election_type'])) {
-      print_r(getSelectList($_POST['election_type']));
-    }
-
-
-    //create election
-    function createElection($es_n, $es_t, $es_c) {
-
-      require('connect.php');
-
-      //md5 & hash table name
-      $protection_es_n = codeValue($es_n);
-      $protection_es_t = codeValue($es_t); //convert these ones to string to store them in db as string
-      $protection_es_c = codeValue($es_c);   //convert these ones to string to store them in db as string
-
-      //chk if election already exists
-      $query_election_name_check = mysqli_query($con, "SELECT * FROM elections WHERE name = '$protection_es_n' LIMIT 1");
-      $count = mysqli_num_rows($query_election_name_check);
-
-      if($count > 0) {
-        return 'An election already exists with this name';
-      } else {
-        $query_election_create = mysqli_query($con, "INSERT INTO elections (id, name, type, class) VALUES (NULL, '$protection_es_n', '$protection_es_t', '$protection_es_c')");
-        if($query_election_create) {
-
-          return 'Election created<br />Scroll down to see your elections';
-        } else {
-          return 'Please try again';
-        }
-      }
-    }
-    if(isset($_POST['electionName']) && isset($_POST['est']) && isset($_POST['esc'])) {
-      print_r(createElection($_POST['electionName'], $_POST['est'], $_POST['esc']));
-    }
 
     // print_r($_POST);
 

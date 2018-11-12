@@ -132,7 +132,11 @@
             </div>
 
             <div id='elections'>
-              <div class="tab-pane-baby col-10 offset-1">
+
+              <?php
+                print_r(getElections());
+              ?>
+              <!-- <div class="tab-pane-baby col-10 offset-1">
                 <h5>Election 1</h5>
                 <form id='formCreatePosition' class='form form2 text-left'>
 
@@ -143,13 +147,13 @@
                   <div class="sub-msg" id='sub-msg'></div>
                 </form>
                 <div class='row position-row'>
-                  <div class='col-6 position'>Position 1</div>
-                  <div class='col-6 position'>Position 1</div>
-                  <div class='col-6 position'>Position 1</div>
-                  <div class='col-6 position'>Position 1</div>
-                  <div class='col-6 position'>Position 1</div>
+                  <div class='col position'>Position 1</div>
+                  <div class='col position'>Position 1</div>
+                  <div class='col position'>Position 1</div>
+                  <div class='col position'>Position 1</div>
+                  <div class='col position'>Position 1</div>
                 </div>
-              </div>
+              </div> -->
             </div>
 
 
@@ -166,8 +170,51 @@
 
 
 
-    <div class="pop-over">
-      hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hello<br />hby
+    <div class="pop-over candidates-load">
+
+      <div class="candidate-div">
+
+        <form id="formCreateCandidate" class="form form2 text-left">
+
+          <div class="form-group">
+            <input election='' position='' name='candidateName' type="text" class="form-control form-control-validated" id="candidateName" aria-describedby="candidateNameHelp" placeholder="Candidate Name" min='5' required>
+            <small id="candidateNameHelp" class="form-text text-muted color-err"></small>
+          </div>
+          <div class="form-group d-none">
+            <input name="positionName" type="text" class="form-control" id="positionName" aria-describedby="positionNameHelp" placeholder="Position Name" min="5" disabled>
+            <small id="positionNameHelp" class="form-text text-muted color-err"></small>
+          </div>
+          <div class="form-group d-none">
+            <input name="ElectionName" value="red" type="text" class="form-control" id="electionName" aria-describedby="ElectionNameHelp" placeholder="Election Name" min="5" disabled>
+            <small id="ElectionNameHelp" class="form-text text-muted color-err"></small>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block bg-1 mt-3">Add Position</button>
+          <div class="sub-msg" id='sub-msg'></div>
+        </form>
+        <!-- <div class="candidates">
+
+          <div class="candidate">
+            candidate
+          </div>
+          <div class="candidate">
+            candidate
+          </div>
+          <div class="candidate">
+            candidate
+          </div>
+          <div class="candidate">
+            candidate
+          </div>
+          <div class="candidate">
+            candidate
+          </div>
+          <div class="candidate">
+            candidate
+          </div>
+        </div> -->
+
+      </div>
+
     </div>
   </div>
 </div>
