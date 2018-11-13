@@ -12,9 +12,6 @@ const formControlValidate = (a) => {
         data: 'election_type='+val,
         success: function(data) {
 
-          formSubmitEvent()
-          fileChangeEvent()
-
           let esc = document.querySelector('#esc')
               data = JSON.parse(data)
 
@@ -22,13 +19,44 @@ const formControlValidate = (a) => {
           esc.innerHTML = `<option id='class-announcer' disabled selected value>Select a ${val}</option>`
           esc.required
 
-          data.forEach((a, b) => {
-            esc.innerHTML += `<option>${a}</option>`
-          })
+          if(data.length > 0) {
+            data.forEach((a, b) => {
+              esc.innerHTML += `<option>${a}</option>`
+            })
+          }
         }
       })
     } else {
       a.parent().parent().find('#esc').hide().addClass('animated fadeInUp')
+    }
+  }
+
+  if(id === 'electionNameCandidate') {
+    if(val !== '') {
+
+
+
+      xhttp = new XMLHttpRequest()
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          let data = JSON.parse(this.responseText),
+              es_p = document.querySelector('#es_p')
+
+          a.parent().parent().find('#es_p').show().addClass('animated fadeInUp')
+          es_p.innerHTML = `<option id='class-announcer' disabled selected value>Select a position</option>`
+          es_p.required
+
+          if(data.length > 0) {
+            data.forEach((a, b) => {
+              es_p.innerHTML += `<option>${a}</option>`
+            })
+          }
+        }
+      }
+      xhttp.open("GET", "action.php?electionNameCandidate="+val, true)
+      xhttp.send()
+    } else {
+      a.parent().parent().find('#es_p').hide().addClass('animated fadeInUp')
     }
   }
 
@@ -45,24 +73,6 @@ const formControlValidate = (a) => {
     })
   }
 
-  if(id === 'candidateName') {
-    let election = a.attr('election'),
-        position = a.attr('position')
-    // $.ajax({
-    //   type: 'POST',
-    //   url: './action.php?jsDoc=yes',
-    //   data: 'candidate_name_check='+val+'&position_candidate_name_check='+position+'&election_candidate_name_check='+election,
-    //   success: function(data) {
-    //     msg = data
-    //     a.parent().find('small').html(msg)
-    //   }
-    // })
-
-    console.log(election, position, 'me');
-
-  }
-
-
   a.parent().find('small').html(msg)
 
 }
@@ -76,15 +86,21 @@ $('.form-control-validated').change(function() {
 const submitFormHandler = (form, data) => {
 
   switch (data) {
-    case 'election_created':
-
-      break;
     case '2':
       data = 'Success'
       window.location = './'
       break;
-    case 'refresh_election':
+    case 'election_created':
       data = 'Election created<br />Scroll down to see election'
+      $('#elections').load('./views/election.php')
+      break;
+    case 'refresh_position':
+      data = 'Position created<br />Scroll down to see position'
+      $('#elections').load('./views/election.php')
+      break;
+    case 'candidate_added':
+      data = 'Candidate added<br />Scroll down to see candidate'
+      $('#elections').load('./views/election.php')
       break;
     default:
       console.log('')
@@ -93,6 +109,9 @@ const submitFormHandler = (form, data) => {
   let subMsg = form.querySelector('div#sub-msg')
   subMsg.className = 'sub-msg-visible'
   subMsg.innerHTML = data
+
+
+
 
 }
 
@@ -160,16 +179,8 @@ const submitForm = (form, upDet, err=0) => {
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         let data = this.responseText
-
         btn.innerHTML = btnHTML
 
-        if(data.includes('Add Position')) {
-          let electionDiv = document.querySelector('#elections')
-
-          electionDiv.innerHTML = data
-          electionDiv.classList.add('animated','fadeInUp')
-          data = 'refresh_election'
-        }
         submitFormHandler(form, data)
       }
     }

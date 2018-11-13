@@ -1,31 +1,41 @@
 // js
 
+//deleteBtn
+const deleteStuff = (btn) => {
+  let election = btn.getAttribute('es_n'),
+      position = btn.getAttribute('ep_n'),
+      candidate = btn.getAttribute('ec_n')
+
+      xhttp = new XMLHttpRequest()
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          let data = this.responseText
+          $('#elections').load('./views/election.php', function() {
+            $('span.del-btn').click(function() {
+              deleteStuff(this)
+            })
+          })
+        }
+      }
+      xhttp.open("GET", `action.php?electionDel=${election}&positionDel=${position}&candidateDel=${candidate}`, true)
+      xhttp.send()
+}
+$('span.del-btn').click(function() {
+  console.log('starting...')
+  deleteStuff(this)
+})
+
+
 const showPostCand = (position, election) => {
   let div = $('div.candidates-load'),
-      divCont = div.html()
+      divCont = div.html(),
+      data = {
+        position,
+        election
+      },
+      inputs = []
 
-  $.ajax({
-    type: 'POST',
-    url: './action.php?jsDoc=yes',
-    beforeSend: function() {
-      div.show().addClass('animated fadeInRight')
-
-      let pst = div.find('#positionName'),
-          cst = div.find('#candidateName'),
-          est = div.find('#electionName')
-
-          pst.val(position)
-          cst.attr('position', position)
-
-          est.val(election)
-          cst.attr('election', election)
-
-    },
-    data: 'candidatePosition='+position+'&candidateElection='+election,
-    success: function(data) {
-      div.html(divCont + data)
-    }
-  })
+      Object.keys(data).forEach((a, b) => inputs[b] = data[a])
 }
 $('.position').click(function() {
   showPostCand(this.getAttribute('id'), this.getAttribute('election'));

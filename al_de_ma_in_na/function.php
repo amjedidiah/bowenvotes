@@ -11,80 +11,26 @@
     $ses_id = $_SESSION['sessionAdminID'];
     $ses_key = $_SESSION['sessionAdminKey'];
 
+      function getSelectElection() {
+
+        $return = '';
+        require('connect.php');
+        $query = mysqli_query($con, "SELECT * FROM elections");
 
 
+        if(mysqli_num_rows($query) > 0) {
+          $return .= "<option disabled selected value>Election Name</option>";
 
-    function getPositions($es_n) {
+          while($row = mysqli_fetch_assoc($query)) {
+            $return .= "<option>".decodeValue($row['name'])."</option>";
+          }
 
-      $elections = '';
-
-      require('connect.php');
-
-      $protection_es_n = codeValue($es_n);
-
-      //chk if positions exist
-      $query_post = mysqli_query($con, "SELECT * FROM positions WHERE election='$protection_es_n'");
-
-      if(mysqli_num_rows($query_post) > 0) {
-        print_r('
-            <div class="row position-row">');
-        while($row = mysqli_fetch_assoc($query_post)) {
-          $protection_ep_n = $row['name'];
-          $ep_n = decodeValue($protection_ep_n);
-          print_r('<div class="col position" id="'.$ep_n.'" election="'.$es_n.'">'.$ep_n.'</div>');
+        } else {
+          $return .= "<option disabled selected value>No elections yet</option>";
         }
-        print_r('
-          </div>');
+
+        return $return;
       }
-
-
-    }
-
-
-
-
-
-    function getElections() {
-
-      $elections = "";
-
-      require('connect.php');
-      $query = mysqli_query($con, "SELECT * FROM elections ORDER BY id DESC");
-      $count = mysqli_num_rows($query);
-
-      if($count > 0) {
-        while($row = mysqli_fetch_assoc($query)) {
-
-          $protection_es_n = $row["name"];
-
-          $election = decodeValue($protection_es_n);
-
-          print_r('<div class="tab-pane-baby col-10 offset-1">
-            <h5>'.$election.'</h5>
-            <form id="formCreatePosition" class="form form2 text-left">
-              <div class="form-group">
-                <input election="'.$election.'" name="positionName" type="text" class="form-control form-control-validated" id="positionName" aria-describedby="positionNameHelp" placeholder="Position Name" min="5" required>
-                <small id="positionNameHelp" class="form-text text-muted color-err"></small>
-              </div>
-              <div class="form-group d-none">
-                <input name="ElectionName" value="'.$election.'" type="text" class="form-control form-control-validated" id="electionName" aria-describedby="ElectionNameHelp" placeholder="Election Name" min="5" disabled>
-                <small id="ElectionNameHelp" class="form-text text-muted color-err"></small>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block bg-1 mt-3">Add Position</button>
-              <div class="sub-msg" id="sub-msg"></div>
-            </form>');
-
-            print_r(getPositions($election));
-        print_r('
-          </div>');
-
-        }
-      } else {
-
-      }
-
-    }
-
 
   } else {
     $ses_id = '';
