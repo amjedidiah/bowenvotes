@@ -120,7 +120,7 @@ function getPositions($es_n) {
 
   $elections = '';
 
-  require('../connect.php');
+  require('connect.php');
 
   $protection_es_n = codeValueElection($es_n);
 
@@ -133,7 +133,7 @@ function getPositions($es_n) {
     while($row = mysqli_fetch_assoc($query_post)) {
       $protection_ep_n = $row['name'];
       $ep_n = decodeValueElection($protection_ep_n);
-      print_r('<div data-toggle="modal" data-target="#exampleModal" class="col position" id="'.$ep_n.'" election="'.$es_n.'"><span class="del-btn" ec_n="" es_n="'.$es_n.'" ep_n="'.$ep_n.'"><i class="fas fa-trash-alt color-1"></i></span>'.$ep_n.'</div>');
+      print_r('<div class="col position" id="'.$ep_n.'" election="'.$es_n.'">'.$ep_n.'</div>');
     }
     print_r('
       </div>');
@@ -152,7 +152,7 @@ function getElections() {
 
   $elections = "";
 
-  require('../connect.php');
+  require('connect.php');
   $query = mysqli_query($con, "SELECT * FROM elections ORDER BY id DESC");
   $count = mysqli_num_rows($query);
 
@@ -164,7 +164,7 @@ function getElections() {
 
       $election = decodeValueElection($protection_es_n);
 
-      print_r('<div class="tab-pane-baby col-10 offset-1 col-lg-5 offset-lg-0"><span class="del-btn" ec_n="" ep_n="" es_n="'.$election.'"><i class="fas fa-trash-alt color-2"></i></span><h5>'.$election.'</h5>
+      print_r('<div class="tab-pane-baby col-10 offset-1 col-lg-5 offset-lg-0"><h5>'.$election.'</h5>
 
       ');
 

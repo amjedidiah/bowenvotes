@@ -382,19 +382,34 @@
 
 
 
-    function vote($es_name, $position_name, $candidate_name, $vote) {
+    function vote($es_n, $ep_n, $ec_n, $ses_id) {
 
       require('connect.php');
 
-      if($vote === 0) {
-        $query;
-      } else {
+      //protect stuff
+      $protection_es_n = codeValue($es_n);
+      $protection_ep_n = codeValue($ep_n);
+      $protection_ec_n = codeValue($ec_n);
 
+      //query user vote
+      $query = mysqli_query($con, "SELECT * FROM votes WHERE user='$ses_id' AND election='$protection_es_n' AND position='$protection_ep_n' AND candidate='$protection_ec_n' LIMIT 1");
+
+
+
+      if(mysqli_num_rows($query) > 0) {
+        //user has already voted, refresh page
+        msg = 'refresh';
+      } else {
+        //add user vote
+        $query = mysqli_query($con, "INSERT INTO votes (id, user, candidate, position, election) VALUES (NULL, '$ses_id', '$protection_ec_n', '$protection_ep_n', '$protection_es_n')");
+
+        //if Successful
+        $msg = ($query ? 'refresh' : 'try again');
       }
-      return $es_name.' '.$position_name.' '.$candidate_name.' '.$vote;
+      return $msg;
 
     }
-    if(isset($_GET['electionName']) && isset($_GET['positionName']) && isset($_GET['candidateName']) && isset($_GET['vote'])) {
+    if(isset($_GET['electionVote']) && isset($_GET['positionVote']) && isset($_GET['candidateVote'])) {
       print_r(vote($_GET['electionName'], $_GET['positionName'], $_GET['candidateName'], $_GET['vote']));
     }
 

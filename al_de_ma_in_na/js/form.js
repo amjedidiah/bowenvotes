@@ -92,15 +92,36 @@ const submitFormHandler = (form, data) => {
       break;
     case 'election_created':
       data = 'Election created<br />Scroll down to see election'
-      $('#elections').load('./views/election.php')
+      $('#elections').load('./views/election.php', function() {
+        $('.position').click(function() {
+          showPostCand(this.getAttribute('id'), this.getAttribute('election'));
+        })
+        $('span.del-btn').click(function() {
+          deleteStuff(this)
+        })
+      })
       break;
     case 'refresh_position':
       data = 'Position created<br />Scroll down to see position'
-      $('#elections').load('./views/election.php')
+      $('#elections').load('./views/election.php', function() {
+        $('.position').click(function() {
+          showPostCand(this.getAttribute('id'), this.getAttribute('election'));
+        })
+        $('span.del-btn').click(function() {
+          deleteStuff(this)
+        })
+      })
       break;
     case 'candidate_added':
       data = 'Candidate added<br />Scroll down to see candidate'
-      $('#elections').load('./views/election.php')
+      $('#elections').load('./views/election.php', function() {
+        $('.position').click(function() {
+          showPostCand(this.getAttribute('id'), this.getAttribute('election'));
+        })
+        $('span.del-btn').click(function() {
+          deleteStuff(this)
+        })
+      })
       break;
     default:
       console.log('')

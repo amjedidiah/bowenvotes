@@ -5,29 +5,22 @@
 <link rel="stylesheet" href="../css/dashboard.css">
 
 </head>
-<body class=''>
+<body class='admin_dash'>
 <div class="container-fluid h-100 page">
   <div class="row p-3 fixed dashboard-header">
-    <div class="col justify-content-between">
+    <div class="col">
 
-      <p href='#' class='logo color-3 text-center'>bowenuniversityvotes</p>
+      <p href='#' class='logo color-3 text-center'><i class="far fa-user color-3"></i> bowenuniversityvotes</p>
 
-      <span class='logout dummy-link d-none'>
-        Logout
-      </span>
     </div>
   </div>
 
   <div class='row h-100'>
 
-    <div class="col-2 dashboard-header-side fixed bg-2 text-center d-none d-lg-block">
-      <p href='#' class='logo color-1 text-center'>
-        <i class="far fa-check-square color-1 mt-5"></i>
-      </p>
-
+    <div class="col-3 dashboard-header-side fixed bg-2 text-center d-none d-md-block">
       <ul class="nav flex-column text-left" id="v-tab" role="list" aria-orientation="vertical">
         <li class="nav-item">
-          <a class="nav-link"  id="v-students-tab" data-toggle="pill" href="#v-students" role="tab" aria-controls="v-students" aria-selected="false">Students</a>
+          <a class="nav-link active"  id="v-students-tab" data-toggle="pill" href="#v-students" role="tab" aria-controls="v-students" aria-selected="false">Students</a>
         </li>
         <li class="nav-item">
           <a class="nav-link"  id="v-elections-tab" data-toggle="pill" href="#v-elections" role="tab" aria-controls="v-elections" aria-selected="false">Elections</a>
@@ -35,10 +28,13 @@
         <li class="nav-item">
           <a class="nav-link"  id="v-results-tab" data-toggle="pill" href="#v-results" role="tab" aria-controls="v-results" aria-selected="false">Results</a>
         </li>
+        <li class="nav-item">
+          <a href='./action.php?logout=1&jsDoc=bowen' class="nav-link" aria-selected="false">Logout</a>
+        </li>
       </ul>
 
     </div>
-    <div class="col dashboard-header-side dashboard-header-bottom fixed bg-2 text-center d-lg-none">
+    <div class="col dashboard-header-side dashboard-header-bottom fixed bg-2 text-center d-md-none pt-0">
       <ul class="nav justify-content-around" id="h-tab" role="list" aria-orientation="horizontal">
         <li class="nav-item">
           <a class="nav-link active"  id="v-students-tab" data-toggle="pill" href="#v-students" role="tab" aria-controls="v-students" aria-selected="false"><i class="fas fa-users"></i><span>Students</span></a>
@@ -57,14 +53,16 @@
     </div>
 
 
-    <div class="col h-100 offset-lg-2">
+    <div class="col h-100 offset-md-3">
       <div class="row h-100 dashboard-view">
         <div class="col h-100 tab-content" id="v-tabContent">
           <!-- <div class="tab-pane fade" id="v-feed" role="tabpanel" aria-labelledby="v-feed-tab" style='border: 1px solid red'>
             No feeds to display
           </div> -->
-          <div class="row tab-pane fade show active h-100" id="v-students" role="tabpanel" aria-labelledby="v-students-tab">
-            <div class="tab-pane-baby col-10 offset-1">
+          <div class="row tab-pane fade show active h-100" id="v-students" role="tabpanel" aria-labelledby="v-students-tab" style=''>
+          <div class="col">
+          <div class="row">
+            <div class="tab-pane-baby col-10 offset-1 col-lg-5 offset-lg-0">
 
               <h5 class=''>Register Your Students</h5>
 
@@ -88,14 +86,18 @@
               </form>
 
             </div>
-            <div class="tab-pane-baby col-10 offset-1">
+            <div class="tab-pane-baby col-10 offset-1 col-lg-5 offset-lg-0">
               <h5>Students Search</h5>
               <p>Coming soon</p>
             </div>
           </div>
-          <div class="row tab-pane fade h-100" id="v-elections" role="tabpanel" aria-labelledby="v-elections-tab">
+          </div>
+          </div>
 
-            <div class="tab-pane-baby col-10 offset-1" id='electionCreationDiv'>
+          <div class="row tab-pane fade h-100" id="v-elections" role="tabpanel" aria-labelledby="v-elections-tab">
+          <div class="col">
+          <div class="row">
+            <div class="tab-pane-baby col-10 offset-1 col-lg-5 offset-lg-0" id='electionCreationDiv'>
 
               <h5 class=''>Create an Election</h5>
               <form id='formCreateElection' class='form form2 text-left'>
@@ -126,7 +128,7 @@
               </form>
 
             </div>
-            <div class="tab-pane-baby col-10 offset-1" id='positionCreationDiv'>
+            <div class="tab-pane-baby col-10 offset-1 col-lg-5 offset-lg-0" id='positionCreationDiv'>
 
               <h5 class=''>Add a Position</h5>
               <form id="formCreatePosition" class="form form2 text-left">
@@ -145,7 +147,7 @@
               </form>
 
             </div>
-            <div class="tab-pane-baby col-10 offset-1" id='candidateCreationDiv'>
+            <div class="tab-pane-baby col-10 offset-1 col-lg-5 offset-lg-0" id='candidateCreationDiv'>
 
               <h5 class=''>Add a Candidate</h5>
               <form id="formCreatePosition" class="form form2 text-left">
@@ -167,28 +169,46 @@
               </form>
 
             </div>
-            <div class="tab-pane-baby col-10 offset-1">
+            <div class="tab-pane-baby col-10 offset-1 col-lg-5 offset-lg-0">
               <h5>Election Search</h5>
               <p>Coming soon</p>
             </div>
 
-            <div id='elections'><?php include('election.php'); ?></div>
-
-
+            <div class='col-12' id='elections'><?php include('election.php'); ?></div>
 
 
           </div>
-          <div class="row tab-pane fade h-100" id="v-results" role="tabpanel" aria-labelledby="v-results-tab">
+          </div>
+          </div>
+          <div class="row tab-pane fade h-100 text-center" id="v-results" role="tabpanel" aria-labelledby="v-results-tab">
             No results to display
           </div>
 
         </div>
+
+
+
+
       </div>
     </div>
 
 
-
-    <div class="pop-over candidates-load">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Candidates</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body candidates-load">
+            ...
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>

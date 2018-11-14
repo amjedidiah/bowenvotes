@@ -490,7 +490,9 @@
       $query_delete_candidate = mysqli_query($con, "DELETE FROM $can_tab WHERE name='$protection_candidate_name' AND position='$protection_position_name'  AND election='$protection_es_name' LIMIT 1");
 
       if($query_delete_candidate) {
-        return 'success';
+        $array = $protection_es_name.'jedidiah'.$protection_position_name;
+
+        return $array;
       } else {
         return 'error';
       }
@@ -508,6 +510,8 @@
         print_r(deletePosition($es_d, $ep_d));
       } elseif ($es_d !== '' && $ec_d !== '' && $ep_d !== '') {
         print_r(deleteCandidates($es_d, $ep_d, $ec_d));
+      } elseif ($es_d === '' && $ec_d === '' && $ep_d === '') {
+        print_r('closes');
       }
     }
 

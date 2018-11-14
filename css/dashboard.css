@@ -17,7 +17,8 @@ body {
 }
 
 .dashboard-header-side {
-  z-index: 999999
+  z-index: 999999;
+  padding-top: 100px
 }
 
 .dashboard-header {
@@ -66,7 +67,11 @@ div.tab-pane div.tab-pane-baby, div.candidate {
     box-shadow: 0.4px 0.5px 0.5px 0.5px #ccc;
     padding: 7%;
     border-radius: 10px;
-    margin-bottom: 80px
+    margin-bottom: 40px
+}
+
+div.tab-pane div.tab-pane-baby:last-child, div.candidate:last-child {
+    margin-bottom: 80px;
 }
 
 div.tab-pane h1, div.tab-pane h2, div.tab-pane h5 {
@@ -98,7 +103,7 @@ div.position:hover, div.candidate:hover {
   z-index: 3;
 }
 
-span.del-btn {
+span.del-btn, span.close {
   position: absolute;
   right: 5%;
   cursor: pointer;
@@ -108,19 +113,21 @@ span.del-btn {
   transition: transform 0.5s
 }
 
+span.close {
+  font-size: 200%;
+}
+
 span.del-btn:hover {
   transform: scale(1.2);
 }
 
 div.pop-over {
   position: fixed;
-  height: 100%;
-  width: 100%;
   background: #fff;
   overflow: auto;
   padding: 80px 5%;
   display: none;
-  z-index: 1000
+  z-index: 1000;
 }
 
 div.candidates {
@@ -132,9 +139,17 @@ div.candidates {
 div.candidate {
   padding: 10%;
   margin: 10px 0;
+  cursor: pointer;
 
-  transition: transform 0.5s, background 0.5s
+  transition: transform 0.5s, background 0.5s, color 0.5s
 }
+
+.admin_dash div.candidate:hover {
+  background: red;
+  color: #fff
+}
+
+
 
 
 /* ADMIN */
@@ -145,7 +160,7 @@ form {
 
 .upload-div {
   position: relative;
-  margin-bottom: 50%;
+  margin-bottom: 100px;
 }
 
 .upload-div p, .upload-div .form-group input {
@@ -168,4 +183,34 @@ form {
 .upload-div .form-group small {
   position: relative;
   top: 220px
+}
+
+
+
+
+
+
+@media only screen and (min-width: 768px) {
+
+  .dashboard-header {
+    width: 75%;
+    margin-left: 24%;
+  }
+
+  .dashboard-header-side {
+    height: 100%;
+  }
+
+  div.tab-pane div.tab-pane-baby, div.candidate {
+      padding: 40px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+
+
+  div.tab-pane .row {
+    display:flex;
+    justify-content: space-around
+  }
 }
