@@ -1,8 +1,7 @@
 <?php
 
   // Start the session
-  session_start();
-
+  require('session.php');
   require('connect.php');
 
   //Protect
@@ -135,9 +134,6 @@
 
 
 
-
-  //if from jsDoc: change $_GET here to post, tis post variable is what the AJAX function from the jS file will post
-  if(isset($_GET['jsDoc']))  {
 
     function generateRandomString($length = 6) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -391,33 +387,36 @@
       $protection_ep_n = codeValue($ep_n);
       $protection_ec_n = codeValue($ec_n);
 
+      $error = 'false';
+      $msg = '';
+
       //query user vote
-      $query = mysqli_query($con, "SELECT * FROM votes WHERE user='$ses_id' AND election='$protection_es_n' AND position='$protection_ep_n' AND candidate='$protection_ec_n' LIMIT 1");
+      $query = mysqli_query($con, "SELECT * FROM votes WHERE user='$ses_id' AND election='$protection_es_n' AND position='$protection_ep_n' LIMIT 1");
 
-
-
+      //if user has voted before
       if(mysqli_num_rows($query) > 0) {
-        //user has already voted, refresh page
-        msg = 'refresh';
-      } else {
+        $query = mysqli_query($con, "DELETE from votes WHERE user='$ses_id' AND election='$protection_es_n' AND position='$protection_ep_n'");
+
+        //if deleted
+        if($query) {
+          $error = 'false';
+        } else {
+          $error = 'true';
+        }
+
+      }
+
+      if($error === 'false') {
         //add user vote
         $query = mysqli_query($con, "INSERT INTO votes (id, user, candidate, position, election) VALUES (NULL, '$ses_id', '$protection_ec_n', '$protection_ep_n', '$protection_es_n')");
 
         //if Successful
-        $msg = ($query ? 'refresh' : 'try again');
+        $msg = ($query ? $ep_n.'jedidiah'.$es_n : 'try again');
       }
       return $msg;
 
     }
-    if(isset($_GET['electionVote']) && isset($_GET['positionVote']) && isset($_GET['candidateVote'])) {
-      print_r(vote($_GET['electionName'], $_GET['positionName'], $_GET['candidateName'], $_GET['vote']));
+    if(isset($_REQUEST['electionVote']) && isset($_REQUEST['positionVote']) && isset($_REQUEST['candidateVote'])) {
+      print_r(vote($_REQUEST['electionVote'], $_REQUEST['positionVote'], $_REQUEST['candidateVote'], $ses_id));
     }
-
-  } else {
-    header('location: ./404.php');
-  }
-
-
-
-
 ?>

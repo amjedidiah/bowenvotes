@@ -164,13 +164,17 @@ const deleteStuff = (btn) => {
           if(data.includes('jedidiah')) {
             let div = $('div.candidates-load')
                 data = data.split('jedidiah')
-                
+
             loaderst(div, data[1], data[0])
           } else {
             $('#elections').load('./views/election.php', function() {
 
               $('.position').click(function() {
               showPostCand(this.getAttribute('id'), this.getAttribute('election'));
+              })
+
+              $('span.del-btn').click(function() {
+                deleteStuff(this)
               })
             })
           }

@@ -1,5 +1,6 @@
 <?php
 
+  require('../session.php');
   function decodeValue($coded_value, $separator='_') {
 
     $array = explode($separator, $coded_value);
@@ -60,7 +61,7 @@
 
 
   //list candidates
-  function getCandidates($protection_ep_n, $protection_es_n) {
+  function getCandidates($protection_ep_n, $protection_es_n, $ses_id) {
 
     $return = '';
 
@@ -71,30 +72,29 @@
     if(mysqli_num_rows($query) > 0) {
       $return .= '<div class="candidate-div"><div class="candidates">';
 
-      while($row = mysqli_fetch_assoc($query)) {
+      while($wower = mysqli_fetch_assoc($query)) {
 
-        $protection_ec_n = $row['name'];
+        $protection_ec_n = $wower['name'];
 
-        $query_num = mysqli_query($con, "SELECT * FROM votes WHERE election='$protection_es_n' AND position='$protection_ep_n' AND candidate='$protection_ec_n'");
+        $query_bot = mysqli_query($con, "SELECT * FROM votes WHERE user='$ses_id' AND candidate='$protection_ec_n' AND position='$protection_ep_n' AND election='$protection_es_n' LIMIT 1");
 
-        if(mysqli_num_rows($query_num) > 1) {
-          $pl = 's';
+        if(mysqli_num_rows($query_bot) > 0) {
+          $voted = 'bg-1 color-1';
         } else {
-          $pl = '';
+          $voted = '';
         }
-
-        $return .= '<div class="candidate text-center" ec_n="'.decodeValue($protection_ec_n).'" es_n="'.decodeValue($protection_es_n).'" ep_n="'.decodeValue($protection_ep_n).'">'.decodeValue($protection_ec_n).'<br />'.mysqli_num_rows($query_num).' vote'.$pl.'</div>';
+        $return .= '<div class="candidate '.$voted.'" ec_n="'.decodeValue($protection_ec_n).'" es_n="'.decodeValue($protection_es_n).'" ep_n="'.decodeValue($protection_ep_n).'">'.decodeValue($protection_ec_n).'</div>';
       }
       $return .= '</div></div>';
     } else {
-      $return .= "<p class='text-center'>No candidates created yet</p>";
+      $return .= "<p class='text-center'>No candidates for this position yet</p>";
     }
 
     return $return;
 
   }
   if(isset($_GET['position']) && isset($_GET['election'])) {
-    print_r(getCandidates($_GET['position'], $_GET['election']));
+    print_r(getCandidates($_GET['position'], $_GET['election'], $ses_id));
   }
 
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2018 at 03:54 PM
+-- Generation Time: Nov 17, 2018 at 03:29 AM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -32,6 +32,15 @@ CREATE TABLE `candidates` (
   `position` varchar(255) NOT NULL,
   `election` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `candidates`
+--
+
+INSERT INTO `candidates` (`id`, `name`, `position`, `election`) VALUES
+(26, 'os_ba_in_cl_pa_ec_ta_ec_ra', 'pa_ra_ec_sa_in_de_ec_na_ta', 'ga_ec_na_ec_ra_al_li_cl_ec_li_ec_ca_ta_in_os_na_sa'),
+(27, 'ec_ma_ma_al_na_un_ec_li_cl_ja_os_he_na', 'pa_ra_ec_sa_in_de_ec_na_ta', 'ga_ec_na_ec_ra_al_li_cl_ec_li_ec_ca_ta_in_os_na_sa'),
+(28, 'al_ba_ec_li_cl_ja_os_sa_he_un_al', 'pa_ra_ec_sa_in_de_ec_na_ta', 'ga_ec_na_ec_ra_al_li_cl_ec_li_ec_ca_ta_in_os_na_sa');
 
 -- --------------------------------------------------------
 
@@ -96,9 +105,7 @@ CREATE TABLE `elections` (
 --
 
 INSERT INTO `elections` (`id`, `name`, `type`, `class`) VALUES
-(1, 'on_ze_ze_cl_li_cl_ec_li_ec_ca_ta_in_os_na', 'li_ec_vi_ec_li', 'fi_ze_ze'),
-(4, 'li_ka_li_li', 'ga_ec_na_ec_ra_al_li', 'ze'),
-(113, 'na_un_ec_sa_al', 'fa_al_ca_un_li_ta_ya', 'ec_na_ga_in_na_ec_ec_ra_in_na_ga');
+(121, 'ga_ec_na_ec_ra_al_li_cl_ec_li_ec_ca_ta_in_os_na_sa', 'ga_ec_na_ec_ra_al_li', 'ze');
 
 -- --------------------------------------------------------
 
@@ -161,8 +168,7 @@ CREATE TABLE `positions` (
 --
 
 INSERT INTO `positions` (`id`, `name`, `election`) VALUES
-(11, 'li_ka_ja', 'on_ze_ze_cl_li_cl_ec_li_ec_ca_ta_in_os_na'),
-(57, 'de_os_sa', 'on_ze_ze_cl_li_cl_ec_li_ec_ca_ta_in_os_na');
+(59, 'pa_ra_ec_sa_in_de_ec_na_ta', 'ga_ec_na_ec_ra_al_li_cl_ec_li_ec_ca_ta_in_os_na_sa');
 
 -- --------------------------------------------------------
 
@@ -210,6 +216,15 @@ CREATE TABLE `votes` (
   `position` varchar(255) NOT NULL,
   `election` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `votes`
+--
+
+INSERT INTO `votes` (`id`, `user`, `candidate`, `position`, `election`) VALUES
+(1, 'tw_ze_on_tw_sl_on_ei_tw_si_si_on', 'ze', 'ze', 'ze'),
+(9, 'tw_ze_on_tw_sl_on_ei_tw_si_si_on', 'ma_al_ba_ec_li', 'pa_ra_ec_sa_in_de_ec_na_ta', 'ba_al_ga_sa'),
+(32, 'tw_ze_on_tw_sl_on_ei_tw_si_si_on', 'ec_ma_ma_al_na_un_ec_li_cl_ja_os_he_na', 'pa_ra_ec_sa_in_de_ec_na_ta', 'ga_ec_na_ec_ra_al_li_cl_ec_li_ec_ca_ta_in_os_na_sa');
 
 --
 -- Indexes for dumped tables
@@ -277,7 +292,7 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `candidates`
 --
 ALTER TABLE `candidates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `ed6d1dbcfceec0db6d0989fb54528b99`
 --
@@ -287,17 +302,17 @@ ALTER TABLE `ed6d1dbcfceec0db6d0989fb54528b99`
 -- AUTO_INCREMENT for table `elections`
 --
 ALTER TABLE `elections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 --
 -- AUTO_INCREMENT for table `positions`
 --
 ALTER TABLE `positions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 --
 -- AUTO_INCREMENT for table `votes`
 --
 ALTER TABLE `votes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

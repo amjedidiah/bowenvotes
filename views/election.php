@@ -133,7 +133,7 @@ function getPositions($es_n) {
     while($row = mysqli_fetch_assoc($query_post)) {
       $protection_ep_n = $row['name'];
       $ep_n = decodeValueElection($protection_ep_n);
-      print_r('<div class="col position" id="'.$ep_n.'" election="'.$es_n.'">'.$ep_n.'</div>');
+      print_r('<div data-toggle="modal" data-target="#exampleModal" class="col position" id="'.$ep_n.'" election="'.$es_n.'">'.$ep_n.'</div>');
     }
     print_r('
       </div>');

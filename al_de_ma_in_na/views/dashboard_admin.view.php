@@ -137,9 +137,11 @@
                   <small id="positionNameHelp" class="form-text text-muted color-err"></small>
                 </div>
                 <div class="form-group">
-                  <select name='ElectionName' class="form-control form-control-validated" id="electionName" aria-describedby="ElectionNameHelp" placeholder='Election Name' required>
+                  <select name='ElectionName' class="form-control form-control-validated" id="electionName" aria-describedby="ElectionNameHelp" placeholder='Election Name' name='wanna' required>
 
-                    <?php print_r(getSelectElection()); ?>
+                    <?php
+                      print_r(getSelectElection());
+                    ?>
                   </select>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block bg-1 mt-3">Add Position</button>
@@ -156,8 +158,10 @@
                   <small id="candidateNameHelp" class="form-text text-muted color-err"></small>
                 </div>
                 <div class="form-group">
-                <select name='ElectionName' class="form-control form-control-validated" id="electionNameCandidate" aria-describedby="ElectionNameHelp" placeholder='Election Name' required>
-                  <?php print_r(getSelectElection()); ?>
+                <select name='ElectionName' class="form-control form-control-validated" id="electionNameCandidate" aria-describedby="ElectionNameHelp" placeholder='Election Name' loafer='two' required>
+                  <?php
+                    print_r(getSelectElection());
+                  ?>
                 </select>
                 </div>
                 <div class="form-group">
