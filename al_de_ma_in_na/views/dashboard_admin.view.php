@@ -25,9 +25,9 @@
         <li class="nav-item">
           <a class="nav-link"  id="v-elections-tab" data-toggle="pill" href="#v-elections" role="tab" aria-controls="v-elections" aria-selected="false">Elections</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link"  id="v-results-tab" data-toggle="pill" href="#v-results" role="tab" aria-controls="v-results" aria-selected="false">Results</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a href='./action.php?logout=1&jsDoc=bowen' class="nav-link" aria-selected="false">Logout</a>
         </li>
@@ -42,9 +42,9 @@
         <li class="nav-item">
           <a class="nav-link"  id="v-elections-tab" data-toggle="pill" href="#v-elections" role="tab" aria-controls="v-elections" aria-selected="false"><i class="fas fa-list-ul"></i><span>Elections</span></a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link"  id="v-results-tab" data-toggle="pill" href="#v-results" role="tab" aria-controls="v-results" aria-selected="false"><i class="fas fa-chart-pie"></i><span>Results</span></a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a href='./action.php?logout=1&jsDoc=bowen' class="nav-link" aria-selected="false"><i class="fas fa-sign-out-alt"></i><span class=''>Logout</span></a>
         </li>
@@ -184,9 +184,9 @@
           </div>
           </div>
           </div>
-          <div class="row tab-pane fade h-100 text-center" id="v-results" role="tabpanel" aria-labelledby="v-results-tab">
+          <!-- <div class="row tab-pane fade h-100 text-center" id="v-results" role="tabpanel" aria-labelledby="v-results-tab">
             No results to display
-          </div>
+          </div> -->
 
         </div>
 

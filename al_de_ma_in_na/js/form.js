@@ -83,6 +83,16 @@ $('.form-control-validated').change(function() {
 
 
 
+const refreshSelectElection = () => {
+
+  $("select[name='ElectionName']").load('./views/selectElections.php', function() {
+  })
+
+}
+
+
+
+
 const submitFormHandler = (form, data) => {
 
   switch (data) {
@@ -100,6 +110,7 @@ const submitFormHandler = (form, data) => {
           deleteStuff(this)
         })
       })
+      refreshSelectElection()
       break;
     case 'refresh_position':
       data = 'Position created<br />Scroll down to see position'
