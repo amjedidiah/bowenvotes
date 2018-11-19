@@ -75,6 +75,14 @@ const vote = (btn) => {
             data = data.split('jedidiah')
 
             loaderst(div, codeValue(data[0]), codeValue(data[1]))
+            $('.modal #sub-msg').show()
+            document.querySelector('.modal #sub-msg').className = 'animated fadeInUp text-center p-5 pt-0'
+
+
+            setTimeout(function() {
+              document.querySelector('.modal #sub-msg').className = 'animated fadeOutDown text-center p-5 pt-0'
+              $('.modal #sub-msg').hide()
+            },3000)
           } else {
             console.log(data)
           }

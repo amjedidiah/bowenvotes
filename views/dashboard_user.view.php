@@ -79,7 +79,10 @@
             </button>
           </div>
           <div class="modal-body candidates-load">
-            
+
+          </div>
+          <div class="sub-msg" id='sub-msg'>
+            You have successfully voted
           </div>
         </div>
       </div>

@@ -154,6 +154,10 @@ div.candidate {
   z-index: 99999999
 }
 
+#exampleModal #sub-msg {
+  margin-top: -110px
+}
+
 
 
 
